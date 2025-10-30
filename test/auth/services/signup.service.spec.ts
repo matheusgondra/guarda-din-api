@@ -1,9 +1,9 @@
 import { Test } from "@nestjs/testing";
-import { LoadUserByEmailRepository } from "@user/interfaces/load-user-by-email.repository";
 import { SignupService } from "@/auth/services/signup.service";
 import { UserAlreadyExistsError } from "@/domain/errors/user-already-exists.error";
 import { SignupParam } from "@/domain/usecases/signup.usecase";
 import { User } from "@/user/entities/user.entity";
+import { LoadUserByEmailRepository } from "@/user/protocols/load-user-by-email.repository";
 
 describe("SignupService", () => {
 	let sut: SignupService;

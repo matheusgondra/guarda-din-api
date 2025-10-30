@@ -1,7 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { UserAlreadyExistsError } from "@/domain/errors/user-already-exists.error";
 import { SignupParam, SignupResult, SignupUseCase } from "@/domain/usecases/signup.usecase";
-import { LoadUserByEmailRepository } from "@/user/interfaces/load-user-by-email.repository";
+import { LoadUserByEmailRepository } from "@/user/protocols/load-user-by-email.repository";
 
 @Injectable()
 export class SignupService implements SignupUseCase {
