@@ -38,4 +38,12 @@ describe("SignupService", () => {
 
 		expect(loadByEmailSpy).toHaveBeenCalledWith(param.email);
 	});
+
+	it("Should throw if LoadUserByEmailRepository throws", async () => {
+		jest.spyOn(loadUserByEmailRepositoryStub, "execute").mockRejectedValueOnce(new Error());
+
+		const promise = sut.execute(param);
+
+		await expect(promise).rejects.toThrow();
+	});
 });
