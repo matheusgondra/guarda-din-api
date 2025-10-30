@@ -20,7 +20,10 @@
     "paths": {
       "@/*": ["src/*"],
       "@test/*": ["test/*"],
-      "@user/*": ["src/user/*"]
+      "@user/*": ["src/user/*"],
+      "@auth/*": ["src/auth/*"],
+      "@domain/*": ["src/domain/*"],
+      "@crypto/*": ["src/cryptography/*"]
     }
   }
 }
