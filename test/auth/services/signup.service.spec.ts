@@ -1,5 +1,6 @@
 import { Test } from "@nestjs/testing";
 import { SignupService } from "@/auth/services/signup.service";
+import { HashGenerator } from "@/cryptography/protocols/hash-generator.protocol";
 import { UserAlreadyExistsError } from "@/domain/errors/user-already-exists.error";
 import { SignupParam } from "@/domain/usecases/signup.usecase";
 import { User } from "@/user/entities/user.entity";
@@ -8,6 +9,7 @@ import { LoadUserByEmailRepository } from "@/user/protocols/load-user-by-email-r
 describe("SignupService", () => {
 	let sut: SignupService;
 	let loadUserByEmailRepositoryStub: LoadUserByEmailRepository;
+	let hashGeneratorStub: HashGenerator;
 
 	const param: SignupParam = {
 		firstName: "any_first_name",
@@ -32,7 +34,13 @@ describe("SignupService", () => {
 				{
 					provide: LoadUserByEmailRepository,
 					useValue: {
-						execute: jest.fn()
+						loadByEmail: jest.fn().mockResolvedValue(null)
+					}
+				},
+				{
+					provide: HashGenerator,
+					useValue: {
+						generate: jest.fn()
 					}
 				}
 			]
@@ -40,10 +48,11 @@ describe("SignupService", () => {
 
 		sut = module.get<SignupService>(SignupService);
 		loadUserByEmailRepositoryStub = module.get<LoadUserByEmailRepository>(LoadUserByEmailRepository);
+		hashGeneratorStub = module.get<HashGenerator>(HashGenerator);
 	});
 
 	it("Should call LoadUserByEmailRepository with correct email", async () => {
-		const loadByEmailSpy = jest.spyOn(loadUserByEmailRepositoryStub, "execute");
+		const loadByEmailSpy = jest.spyOn(loadUserByEmailRepositoryStub, "loadByEmail");
 
 		await sut.execute(param);
 
@@ -51,7 +60,7 @@ describe("SignupService", () => {
 	});
 
 	it("Should throw if LoadUserByEmailRepository throws", async () => {
-		jest.spyOn(loadUserByEmailRepositoryStub, "execute").mockRejectedValueOnce(new Error());
+		jest.spyOn(loadUserByEmailRepositoryStub, "loadByEmail").mockRejectedValueOnce(new Error());
 
 		const promise = sut.execute(param);
 
@@ -59,10 +68,18 @@ describe("SignupService", () => {
 	});
 
 	it("Should throw UserAlreadyExistsError if LoadUserByEmailRepository returns a user", async () => {
-		jest.spyOn(loadUserByEmailRepositoryStub, "execute").mockResolvedValueOnce(userMock);
+		jest.spyOn(loadUserByEmailRepositoryStub, "loadByEmail").mockResolvedValueOnce(userMock);
 
 		const promise = sut.execute(param);
 
 		await expect(promise).rejects.toThrow(new UserAlreadyExistsError());
+	});
+
+	it("Should call HashGenerator with correct value", async () => {
+		const generateSpy = jest.spyOn(hashGeneratorStub, "generate");
+
+		await sut.execute(param);
+
+		expect(generateSpy).toHaveBeenCalledWith(param.password);
 	});
 });
