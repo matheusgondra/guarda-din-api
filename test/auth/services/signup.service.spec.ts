@@ -1,7 +1,9 @@
 import { Test } from "@nestjs/testing";
 import { LoadUserByEmailRepository } from "@user/interfaces/load-user-by-email.repository";
 import { SignupService } from "@/auth/services/signup.service";
+import { UserAlreadyExistsError } from "@/domain/errors/user-already-exists.error";
 import { SignupParam } from "@/domain/usecases/signup.usecase";
+import { User } from "@/user/entities/user.entity";
 
 describe("SignupService", () => {
 	let sut: SignupService;
@@ -13,6 +15,15 @@ describe("SignupService", () => {
 		email: "any@email.com",
 		password: "any_password"
 	};
+	const userMock = new User(
+		"any_id",
+		"any_first_name",
+		"any_last_name",
+		"any@email.com",
+		"hashed_password",
+		new Date("2023-01-01T00:00:00Z"),
+		new Date("2023-01-01T00:00:00Z")
+	);
 
 	beforeEach(async () => {
 		const module = await Test.createTestingModule({
@@ -45,5 +56,13 @@ describe("SignupService", () => {
 		const promise = sut.execute(param);
 
 		await expect(promise).rejects.toThrow();
+	});
+
+	it("Should throw UserAlreadyExistsError if LoadUserByEmailRepository returns a user", async () => {
+		jest.spyOn(loadUserByEmailRepositoryStub, "execute").mockResolvedValueOnce(userMock);
+
+		const promise = sut.execute(param);
+
+		await expect(promise).rejects.toThrow(new UserAlreadyExistsError());
 	});
 });
