@@ -1,15 +1,17 @@
 import { Test } from "@nestjs/testing";
+import { UserMock } from "@test/user/mock/user.mock";
 import { SignupService } from "@/auth/services/signup.service";
 import { HashGenerator } from "@/cryptography/protocols/hash-generator.protocol";
 import { UserAlreadyExistsError } from "@/domain/errors/user-already-exists.error";
 import { SignupParam } from "@/domain/usecases/signup.usecase";
-import { User } from "@/user/entities/user.entity";
+import { AddUserRepository } from "@/user/protocols/add-user-repository.protocol";
 import { LoadUserByEmailRepository } from "@/user/protocols/load-user-by-email-repository.protocol";
 
 describe("SignupService", () => {
 	let sut: SignupService;
 	let loadUserByEmailRepositoryStub: LoadUserByEmailRepository;
 	let hashGeneratorStub: HashGenerator;
+	let addUserRepositoryStub: AddUserRepository;
 
 	const param: SignupParam = {
 		firstName: "any_first_name",
@@ -17,15 +19,7 @@ describe("SignupService", () => {
 		email: "any@email.com",
 		password: "any_password"
 	};
-	const userMock = new User(
-		"any_id",
-		"any_first_name",
-		"any_last_name",
-		"any@email.com",
-		"hashed_password",
-		new Date("2023-01-01T00:00:00Z"),
-		new Date("2023-01-01T00:00:00Z")
-	);
+	const userMock = new UserMock();
 
 	beforeEach(async () => {
 		const module = await Test.createTestingModule({
@@ -40,7 +34,13 @@ describe("SignupService", () => {
 				{
 					provide: HashGenerator,
 					useValue: {
-						generate: jest.fn()
+						generate: jest.fn().mockResolvedValue("hashed_password")
+					}
+				},
+				{
+					provide: AddUserRepository,
+					useValue: {
+						add: jest.fn()
 					}
 				}
 			]
@@ -49,6 +49,7 @@ describe("SignupService", () => {
 		sut = module.get<SignupService>(SignupService);
 		loadUserByEmailRepositoryStub = module.get<LoadUserByEmailRepository>(LoadUserByEmailRepository);
 		hashGeneratorStub = module.get<HashGenerator>(HashGenerator);
+		addUserRepositoryStub = module.get<AddUserRepository>(AddUserRepository);
 	});
 
 	describe("LoadUserByEmailRepository", () => {
@@ -92,6 +93,22 @@ describe("SignupService", () => {
 			const promise = sut.execute(param);
 
 			await expect(promise).rejects.toThrow();
+		});
+	});
+
+	describe("AddUserRepository", () => {
+		it("Should call AddUserRepository with correct value", async () => {
+			const addSpy = jest.spyOn(addUserRepositoryStub, "add");
+
+			await sut.execute(param);
+
+			expect(addSpy).toHaveBeenCalledWith({
+				...param,
+				password: "hashed_password",
+				id: expect.any(String),
+				createdAt: expect.any(Date),
+				updatedAt: expect.any(Date)
+			});
 		});
 	});
 });
