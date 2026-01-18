@@ -35,4 +35,10 @@ describe("BCryptService", () => {
 
 		expect(hashSpy).toHaveBeenCalledWith(value, salt);
 	});
+
+	it("Should return a hashed value on success", async () => {
+		const hashedValue = await sut.generate(value);
+
+		expect(hashedValue).toBe("hashed_value");
+	});
 });
