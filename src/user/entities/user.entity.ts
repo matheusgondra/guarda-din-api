@@ -1,3 +1,13 @@
+type UserData = {
+	id?: string;
+	firstName: string;
+	lastName: string;
+	email: string;
+	password: string;
+	createdAt?: Date;
+	updatedAt?: Date;
+};
+
 export class User {
 	private id: string;
 	private firstName: string;
@@ -7,22 +17,14 @@ export class User {
 	private createdAt: Date;
 	private updatedAt: Date;
 
-	constructor(
-		id: string,
-		firstName: string,
-		lastName: string,
-		email: string,
-		password: string,
-		createdAt: Date,
-		updatedAt: Date
-	) {
-		this.id = id;
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.email = email;
-		this.password = password;
-		this.createdAt = createdAt;
-		this.updatedAt = updatedAt;
+	constructor(userData: UserData) {
+		this.id = userData.id || "";
+		this.firstName = userData.firstName;
+		this.lastName = userData.lastName;
+		this.email = userData.email;
+		this.password = userData.password;
+		this.createdAt = userData.createdAt || new Date();
+		this.updatedAt = userData.updatedAt || new Date();
 	}
 
 	getId(): string {
@@ -43,5 +45,13 @@ export class User {
 
 	getPassword(): string {
 		return this.password;
+	}
+
+	getCreatedAt(): Date {
+		return new Date(this.createdAt);
+	}
+
+	getUpdatedAt(): Date {
+		return new Date(this.updatedAt);
 	}
 }
