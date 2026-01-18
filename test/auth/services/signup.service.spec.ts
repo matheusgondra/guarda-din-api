@@ -110,5 +110,13 @@ describe("SignupService", () => {
 				updatedAt: expect.any(Date)
 			});
 		});
+
+		it("Should throw if AddUserRepository throws", async () => {
+			jest.spyOn(addUserRepositoryStub, "add").mockRejectedValueOnce(new Error());
+
+			const promise = sut.execute(param);
+
+			await expect(promise).rejects.toThrow();
+		});
 	});
 });
