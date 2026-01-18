@@ -26,8 +26,15 @@ export class SignupService implements SignupUseCase {
 			...param,
 			password: hashedPassword
 		});
-		await this.addUserRepository.add(user);
+		const newUser = await this.addUserRepository.add(user);
 
-		return null;
+		return {
+			id: newUser.getId(),
+			firstName: newUser.getFirstName(),
+			lastName: newUser.getLastName(),
+			email: newUser.getEmail(),
+			createdAt: newUser.getCreatedAt(),
+			updatedAt: newUser.getUpdatedAt()
+		};
 	}
 }
