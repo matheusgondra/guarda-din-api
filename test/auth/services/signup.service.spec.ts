@@ -40,7 +40,7 @@ describe("SignupService", () => {
 				{
 					provide: AddUserRepository,
 					useValue: {
-						add: jest.fn()
+						add: jest.fn().mockResolvedValue(userMock)
 					}
 				}
 			]
@@ -118,5 +118,11 @@ describe("SignupService", () => {
 
 			await expect(promise).rejects.toThrow();
 		});
+	});
+
+	it("Should return a SignupResult on success", async () => {
+		const result = await sut.execute(param);
+
+		expect(result).toEqual(userMock.getUserWithoutPassword());
 	});
 });

@@ -12,4 +12,15 @@ export class UserMock extends User {
 			updatedAt: new Date("2023-01-01T00:00:00Z")
 		});
 	}
+
+	getUserWithoutPassword() {
+		return {
+			id: this.getId(),
+			firstName: this.getFirstName(),
+			lastName: this.getLastName(),
+			email: this.getEmail(),
+			createdAt: this.getCreatedAt(),
+			updatedAt: this.getUpdatedAt()
+		};
+	}
 }
