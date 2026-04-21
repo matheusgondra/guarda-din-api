@@ -1,9 +1,11 @@
 import { Test } from "@nestjs/testing";
 import { PrismaService } from "@/prisma/services/prisma.service";
 import { UserRepository } from "@/user/repositories/user.repository";
+import { UserMock } from "../mock/user.mock";
 
 describe("UserRepository", () => {
 	const email = "any@email.com";
+	const userMock = new UserMock();
 
 	let sut: UserRepository;
 	let prismaService: PrismaService;
@@ -40,6 +42,22 @@ describe("UserRepository", () => {
 			const promise = sut.loadByEmail(email);
 
 			await expect(promise).rejects.toThrow();
+		});
+
+		it("Should return a user if it exists", async () => {
+			jest.spyOn(prismaService.user, "findUnique").mockResolvedValueOnce({
+				id: userMock.getId(),
+				firstName: userMock.getFirstName(),
+				lastName: userMock.getLastName(),
+				email: userMock.getEmail(),
+				password: userMock.getPassword(),
+				createdAt: userMock.getCreatedAt(),
+				updatedAt: userMock.getUpdatedAt()
+			});
+
+			const result = await sut.loadByEmail(email);
+
+			expect(result).toEqual(userMock);
 		});
 	});
 });
