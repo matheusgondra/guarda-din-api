@@ -1,6 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { PrismaService } from "@/prisma/services/prisma.service";
 import { User } from "../entities/user.entity";
+import { UserMapper } from "../mapper/user.mapper";
 import { LoadUserByEmailRepository } from "../protocols/load-user-by-email-repository.protocol";
 
 @Injectable()
@@ -15,6 +16,6 @@ export class UserRepository implements LoadUserByEmailRepository {
 			return null;
 		}
 
-		return null;
+		return UserMapper.toDomain(user);
 	}
 }
