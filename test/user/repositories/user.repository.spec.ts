@@ -78,5 +78,13 @@ describe("UserRepository", () => {
 				}
 			});
 		});
+
+		it("Should throw if PrismaService.user.create throws", async () => {
+			jest.spyOn(prismaService.user, "create").mockRejectedValueOnce(new Error());
+
+			const promise = sut.add(userMock);
+
+			await expect(promise).rejects.toThrow();
+		});
 	});
 });
