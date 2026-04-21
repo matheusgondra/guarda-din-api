@@ -18,7 +18,8 @@ describe("UserRepository", () => {
 					provide: PrismaService,
 					useValue: {
 						user: {
-							findUnique: jest.fn()
+							findUnique: jest.fn(),
+							create: jest.fn()
 						}
 					}
 				}
@@ -58,6 +59,24 @@ describe("UserRepository", () => {
 			const result = await sut.loadByEmail(email);
 
 			expect(result).toEqual(userMock);
+		});
+	});
+
+	describe("add", () => {
+		it("Should call PrismaService.user.create with correct values", async () => {
+			const createSpy = jest.spyOn(prismaService.user, "create");
+			await sut.add(userMock);
+
+			expect(createSpy).toHaveBeenCalledWith({
+				data: {
+					firstName: userMock.getFirstName(),
+					lastName: userMock.getLastName(),
+					email: userMock.getEmail(),
+					password: userMock.getPassword(),
+					createdAt: userMock.getCreatedAt(),
+					updatedAt: userMock.getUpdatedAt()
+				}
+			});
 		});
 	});
 });
