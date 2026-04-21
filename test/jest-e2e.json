@@ -1,9 +1,19 @@
 {
-	"moduleFileExtensions": ["js", "json", "ts"],
-	"rootDir": ".",
-	"testEnvironment": "node",
-	"testRegex": ".e2e-spec.ts$",
-	"transform": {
-		"^.+\\.(t|j)s$": "ts-jest"
-	}
+  "rootDir": "..",
+  "roots": ["<rootDir>/test"],
+  "testEnvironment": "node",
+  "testMatch": ["<rootDir>/test/**/*.e2e-spec.ts"],
+  "moduleFileExtensions": ["ts", "js", "json"],
+  "transform": {
+    "^.+\\.(t|j)s$": "ts-jest"
+  },
+  "moduleNameMapper": {
+    "^(\\.{1,2}/.*)\\.js$": "$1",
+    "^@/(.*)$": "<rootDir>/src/$1",
+    "^@test/(.*)$": "<rootDir>/test/$1",
+    "^@user/(.*)$": "<rootDir>/src/user/$1",
+    "^@auth/(.*)$": "<rootDir>/src/auth/$1",
+    "^@domain/(.*)$": "<rootDir>/src/domain/$1",
+    "^@crypto/(.*)$": "<rootDir>/src/cryptography/$1"
+  }
 }
