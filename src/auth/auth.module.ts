@@ -1,5 +1,5 @@
 import { Module } from "@nestjs/common";
-import { SignupUseCase } from "src/domain/usecases/signup.usecase";
+import { SignupUseCase } from "@/domain/usecases/signup.usecase";
 import { SignupService } from "./services/signup.service";
 
 @Module({

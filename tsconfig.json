@@ -1,29 +1,32 @@
 {
   "compilerOptions": {
     "module": "commonjs",
+    "moduleResolution": "bundler",
     "declaration": true,
     "removeComments": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "allowSyntheticDefaultImports": true,
-    "target": "ES2021",
+    "target": "ES2025",
     "sourceMap": true,
+    "rootDir": ".",
     "outDir": "./dist",
-    "baseUrl": "./",
     "incremental": true,
     "skipLibCheck": true,
-    "strictNullChecks": false,
+    "strictNullChecks": true,
     "noImplicitAny": false,
-    "strictBindCallApply": false,
-    "forceConsistentCasingInFileNames": false,
-    "noFallthroughCasesInSwitch": false,
+    "strictBindCallApply": true,
+    "forceConsistentCasingInFileNames": true,
+    "noFallthroughCasesInSwitch": true,
+    "types": ["node", "jest"],
     "paths": {
-      "@/*": ["src/*"],
-      "@test/*": ["test/*"],
-      "@user/*": ["src/user/*"],
-      "@auth/*": ["src/auth/*"],
-      "@domain/*": ["src/domain/*"],
-      "@crypto/*": ["src/cryptography/*"]
+      "@/*": ["./src/*"],
+      "@test/*": ["./test/*"],
+      "@user/*": ["./src/user/*"],
+      "@auth/*": ["./src/auth/*"],
+      "@domain/*": ["./src/domain/*"],
+      "@crypto/*": ["./src/cryptography/*"]
     }
-  }
+  },
+  "include": ["src", "test"]
 }
