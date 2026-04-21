@@ -1,7 +1,8 @@
 import { Module } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
-import { AppController } from "./app.controller";
-import { AppService } from "./app.service";
+import { APP_INTERCEPTOR, APP_PIPE } from "@nestjs/core";
+import { ZodSerializerInterceptor, ZodValidationPipe } from "nestjs-zod";
+import { AuthModule } from "./auth/auth.module";
 import { validateEnv } from "./env.validation";
 
 @Module({
@@ -13,9 +14,18 @@ import { validateEnv } from "./env.validation";
 				abortEarly: true
 			},
 			validate: validateEnv
-		})
+		}),
+		AuthModule
 	],
-	controllers: [AppController],
-	providers: [AppService]
+	providers: [
+		{
+			provide: APP_PIPE,
+			useClass: ZodValidationPipe
+		},
+		{
+			provide: APP_INTERCEPTOR,
+			useClass: ZodSerializerInterceptor
+		}
+	]
 })
 export class AppModule {}

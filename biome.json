@@ -21,7 +21,8 @@
 			"recommended": false,
 			"complexity": {
 				"noBannedTypes": "error",
-				"noUselessTypeConstraint": "error"
+				"noUselessTypeConstraint": "error",
+				"noUselessConstructor": "off"
 			},
 			"correctness": {
 				"noPrecisionLoss": "error",
@@ -57,6 +58,9 @@
 			"quoteStyle": "double",
 			"attributePosition": "auto",
 			"bracketSpacing": true
+		},
+		"parser": {
+			"unsafeParameterDecoratorsEnabled": true
 		}
 	},
 	"html": {
