@@ -13,4 +13,16 @@ export class UserMapper {
 			updatedAt: entity.updatedAt
 		});
 	}
+
+	static toEntity(domain: User): UserEntity {
+		return {
+			id: domain.getId(),
+			firstName: domain.getFirstName(),
+			lastName: domain.getLastName(),
+			email: domain.getEmail(),
+			password: domain.getPassword(),
+			createdAt: domain.getCreatedAt(),
+			updatedAt: domain.getUpdatedAt()
+		};
+	}
 }
