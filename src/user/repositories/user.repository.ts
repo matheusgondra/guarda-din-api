@@ -27,10 +27,10 @@ export class UserRepository implements LoadUserByEmailRepository, AddUserReposit
 			id: undefined
 		};
 
-		await this.prismaService.user.create({
+		const createdUser = await this.prismaService.user.create({
 			data: createdUserData
 		});
 
-		return {} as User;
+		return UserMapper.toDomain(createdUser);
 	}
 }
