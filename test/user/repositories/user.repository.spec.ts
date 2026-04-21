@@ -19,7 +19,15 @@ describe("UserRepository", () => {
 					useValue: {
 						user: {
 							findUnique: jest.fn(),
-							create: jest.fn()
+							create: jest.fn().mockResolvedValue({
+								id: userMock.getId(),
+								firstName: userMock.getFirstName(),
+								lastName: userMock.getLastName(),
+								email: userMock.getEmail(),
+								password: userMock.getPassword(),
+								createdAt: userMock.getCreatedAt(),
+								updatedAt: userMock.getUpdatedAt()
+							})
 						}
 					}
 				}
@@ -85,6 +93,12 @@ describe("UserRepository", () => {
 			const promise = sut.add(userMock);
 
 			await expect(promise).rejects.toThrow();
+		});
+
+		it("Should return a user on success", async () => {
+			const result = await sut.add(userMock);
+
+			expect(result).toEqual(userMock);
 		});
 	});
 });
