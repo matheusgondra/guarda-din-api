@@ -29,5 +29,5 @@
       "@crypto/*": ["./src/cryptography/*"]
     }
   },
-  "include": ["src", "test"]
+  "include": ["src", "test", "prisma.config.ts"]
 }
