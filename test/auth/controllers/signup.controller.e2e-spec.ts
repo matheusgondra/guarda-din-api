@@ -23,11 +23,6 @@ describe("SignupController (e2e)", () => {
 	let prismaService: PrismaService;
 
 	beforeAll(async () => {
-		process.env.NODE_ENV = "test";
-		const urlTest = new URL(process.env.DATABASE_URL!);
-		urlTest.searchParams.set("schema", "test-e2e");
-		process.env.DATABASE_URL = urlTest.toString();
-
 		const module = await Test.createTestingModule({
 			imports: [AppModule]
 		}).compile();

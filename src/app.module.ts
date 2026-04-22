@@ -16,6 +16,7 @@ import { validateEnv } from "./env.validation";
 				allowUnknown: false,
 				abortEarly: true
 			},
+			envFilePath: process.env.NODE_ENV === "test" ? ".env.test" : ".env",
 			validate: validateEnv
 		}),
 		AuthModule
