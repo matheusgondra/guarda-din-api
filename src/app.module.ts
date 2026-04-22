@@ -1,8 +1,9 @@
 import { Module } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
-import { APP_INTERCEPTOR, APP_PIPE } from "@nestjs/core";
+import { APP_FILTER, APP_INTERCEPTOR, APP_PIPE } from "@nestjs/core";
 import { ZodSerializerInterceptor, ZodValidationPipe } from "nestjs-zod";
 import { AuthModule } from "./auth/auth.module";
+import { ConflictExceptionFilter } from "./common/filters/conflict-exception.filter";
 import { CustomZodValidationPipe } from "./common/pipes/custom-zod-validation.pipe";
 import { validateEnv } from "./env.validation";
 
@@ -22,6 +23,10 @@ import { validateEnv } from "./env.validation";
 		{
 			provide: APP_PIPE,
 			useClass: CustomZodValidationPipe
+		},
+		{
+			provide: APP_FILTER,
+			useClass: ConflictExceptionFilter
 		},
 		{
 			provide: APP_INTERCEPTOR,
