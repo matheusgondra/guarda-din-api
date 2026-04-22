@@ -98,5 +98,19 @@ describe("SignupController (e2e)", () => {
 					});
 				});
 		});
+
+		it("Should return 409 if email is already in use", async () => {
+			return request(app.getHttpServer())
+				.post(route)
+				.send(requestBody)
+				.expect(({ body, status }) => {
+					expect(status).toBe(409);
+					expect(body).toEqual({
+						statusCode: 409,
+						message: "User already exists",
+						timestamp: expect.any(String)
+					});
+				});
+		});
 	});
 });
