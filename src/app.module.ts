@@ -3,6 +3,7 @@ import { ConfigModule } from "@nestjs/config";
 import { APP_INTERCEPTOR, APP_PIPE } from "@nestjs/core";
 import { ZodSerializerInterceptor, ZodValidationPipe } from "nestjs-zod";
 import { AuthModule } from "./auth/auth.module";
+import { CustomZodValidationPipe } from "./common/pipes/custom-zod-validation.pipe";
 import { validateEnv } from "./env.validation";
 
 @Module({
@@ -20,7 +21,7 @@ import { validateEnv } from "./env.validation";
 	providers: [
 		{
 			provide: APP_PIPE,
-			useClass: ZodValidationPipe
+			useClass: CustomZodValidationPipe
 		},
 		{
 			provide: APP_INTERCEPTOR,
