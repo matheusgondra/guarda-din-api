@@ -1,6 +1,7 @@
 import { BadRequestException, PipeTransform, Type } from "@nestjs/common";
 import { createZodValidationPipe } from "nestjs-zod";
 import { ZodError } from "zod";
+import { ValidationErrorResponseDTO } from "../dto/validation-error-response.dto";
 
 export const CustomZodValidationPipe: Type<PipeTransform> = createZodValidationPipe({
 	createValidationException: (zodError) => {
@@ -12,7 +13,8 @@ export const CustomZodValidationPipe: Type<PipeTransform> = createZodValidationP
 			field: issue.path.join("."),
 			message: issue.message
 		}));
-		return new BadRequestException({ statusCode: 400, message: "Validation failed", errors });
+		const validationErrorResponse = new ValidationErrorResponseDTO(errors);
+		return new BadRequestException(validationErrorResponse);
 	},
 	strictSchemaDeclaration: true
 });

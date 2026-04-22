@@ -73,6 +73,7 @@ describe("SignupController (e2e)", () => {
 					expect(body).toEqual({
 						statusCode: 400,
 						message: "Validation failed",
+						timestamp: expect.any(String),
 						errors: [
 							{
 								field: "email",

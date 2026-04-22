@@ -1,6 +1,7 @@
-import { ArgumentsHost, Catch, ExceptionFilter } from "@nestjs/common";
+import { ArgumentsHost, Catch, ExceptionFilter, HttpStatus } from "@nestjs/common";
 import { Response } from "express";
 import { UserAlreadyExistsError } from "@/domain/errors/user-already-exists.error";
+import { ErrorResponseDTO } from "../dto/error-response.dto";
 
 @Catch(UserAlreadyExistsError)
 export class ConflictExceptionFilter implements ExceptionFilter {
@@ -8,12 +9,8 @@ export class ConflictExceptionFilter implements ExceptionFilter {
 		const context = host.switchToHttp();
 		const response = context.getResponse<Response>();
 
-		const status = 409;
+		const errorResponse = new ErrorResponseDTO(HttpStatus.CONFLICT, exception.message);
 
-		response.status(status).json({
-			statusCode: status,
-			message: exception.message || "Conflict",
-			timestamp: new Date().toISOString()
-		});
+		response.status(HttpStatus.CONFLICT).json(errorResponse);
 	}
 }
