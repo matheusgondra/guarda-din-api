@@ -7,7 +7,7 @@ import { SignupRequestDTO } from "../dto/signup-request.dto";
 import { SignupResponseDTO } from "../dto/signup-response.dto";
 
 @ApiTags("Auth")
-@Controller("api/signup")
+@Controller("signup")
 export class SignupController {
 	private readonly logger = new Logger(SignupController.name);
 

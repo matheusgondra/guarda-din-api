@@ -35,6 +35,8 @@ describe("SignupController (e2e)", () => {
 		app = module.createNestApplication();
 		prismaService = app.get(PrismaService);
 
+		app.setGlobalPrefix("api");
+
 		await app.init();
 
 		await prismaService.user.deleteMany();
