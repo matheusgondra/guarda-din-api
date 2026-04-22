@@ -12,6 +12,12 @@ describe("SignupController (e2e)", () => {
 		email: "fulano.de.tal@email.com",
 		password: "StrongPassword123!"
 	};
+	const invalidRequestBody = {
+		firstName: "Fulano",
+		lastName: "de Tal",
+		email: "invalid-email",
+		password: "123"
+	};
 
 	let app: INestApplication;
 	let prismaService: PrismaService;
@@ -54,6 +60,41 @@ describe("SignupController (e2e)", () => {
 						email: requestBody.email,
 						createdAt: expect.any(String),
 						updatedAt: expect.any(String)
+					});
+				});
+		});
+
+		it("Should return 400 if request body is invalid", async () => {
+			return request(app.getHttpServer())
+				.post(route)
+				.send(invalidRequestBody)
+				.expect(({ body, status }) => {
+					expect(status).toBe(400);
+					expect(body).toEqual({
+						statusCode: 400,
+						message: "Validation failed",
+						errors: [
+							{
+								field: "email",
+								message: "Invalid email address"
+							},
+							{
+								field: "password",
+								message: "password must be at least 6 characters long"
+							},
+							{
+								field: "password",
+								message: "password must contain at least one uppercase letter"
+							},
+							{
+								field: "password",
+								message: "password must contain at least one lowercase letter"
+							},
+							{
+								field: "password",
+								message: "password must contain at least one special character"
+							}
+						]
 					});
 				});
 		});
