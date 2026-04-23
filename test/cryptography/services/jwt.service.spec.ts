@@ -32,4 +32,14 @@ describe("JwtService", () => {
 
 		expect(signSpy).toHaveBeenCalledWith({ sub: payload }, secret, { expiresIn: "1h" });
 	});
+
+	it("Should throw if jwt.sign throws", async () => {
+		jest.spyOn(jwt, "sign").mockImplementationOnce(() => {
+			throw new Error();
+		});
+
+		const promise = sut.generateToken(payload);
+
+		await expect(promise).rejects.toThrow();
+	});
 });
