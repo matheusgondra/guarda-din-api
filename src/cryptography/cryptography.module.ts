@@ -1,6 +1,7 @@
 import { Module } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
 import { Env } from "@/env.validation";
+import { HashComparer } from "./protocols/hash-comparer.protocol";
 import { HashGenerator } from "./protocols/hash-generator.protocol";
 import { BCryptService } from "./services/bcrypt.service";
 
@@ -14,8 +15,12 @@ import { BCryptService } from "./services/bcrypt.service";
 
 				return new BCryptService(salt);
 			}
+		},
+		{
+			provide: HashComparer,
+			useExisting: HashGenerator
 		}
 	],
-	exports: [HashGenerator]
+	exports: [HashGenerator, HashComparer]
 })
 export class CryptographyModule {}
