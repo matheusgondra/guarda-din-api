@@ -80,5 +80,13 @@ describe("BCryptService", () => {
 
 			expect(isValid).toBe(true);
 		});
+
+		it("Should return false if bcrypt.compare returns false", async () => {
+			jest.spyOn(bcrypt, "compare").mockImplementationOnce(() => false);
+
+			const isValid = await sut.compare(value, hash);
+
+			expect(isValid).toBe(false);
+		});
 	});
 });
