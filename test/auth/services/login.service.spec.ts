@@ -110,5 +110,13 @@ describe("LoginService", () => {
 
 			expect(generateTokenSpy).toHaveBeenCalledWith(userMock.getId());
 		});
+
+		it("Should throw if TokenGenerator throws", async () => {
+			jest.spyOn(tokenGenerator, "generateToken").mockRejectedValueOnce(new Error());
+
+			const promise = sut.execute(param);
+
+			await expect(promise).rejects.toThrow();
+		});
 	});
 });
