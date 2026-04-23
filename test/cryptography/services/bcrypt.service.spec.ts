@@ -5,7 +5,8 @@ import { BCryptService } from "@/cryptography/services/bcrypt.service";
 jest.mock("bcryptjs", () => ({
 	__esModule: true,
 	default: {
-		hash: jest.fn().mockResolvedValue("hashed_value")
+		hash: jest.fn().mockResolvedValue("hashed_value"),
+		compare: jest.fn().mockResolvedValue(true)
 	}
 }));
 
@@ -14,6 +15,7 @@ describe("BCryptService", () => {
 
 	const value = "any_value";
 	const salt = 3;
+	const hash = "any_hash";
 
 	beforeEach(async () => {
 		const module = await Test.createTestingModule({
@@ -28,27 +30,39 @@ describe("BCryptService", () => {
 		sut = module.get<BCryptService>(BCryptService);
 	});
 
-	it("Should call bcrypt.hash with correct values", async () => {
-		const hashSpy = jest.spyOn(bcrypt, "hash");
+	describe("generate", () => {
+		it("Should call bcrypt.hash with correct values", async () => {
+			const hashSpy = jest.spyOn(bcrypt, "hash");
 
-		await sut.generate(value);
+			await sut.generate(value);
 
-		expect(hashSpy).toHaveBeenCalledWith(value, salt);
-	});
-
-	it("Should return a hashed value on success", async () => {
-		const hashedValue = await sut.generate(value);
-
-		expect(hashedValue).toBe("hashed_value");
-	});
-
-	it("Should throw if bcrypt.hash throws", async () => {
-		jest.spyOn(bcrypt, "hash").mockImplementationOnce(() => {
-			throw new Error();
+			expect(hashSpy).toHaveBeenCalledWith(value, salt);
 		});
 
-		const promise = sut.generate(value);
+		it("Should return a hashed value on success", async () => {
+			const hashedValue = await sut.generate(value);
 
-		await expect(promise).rejects.toThrow();
+			expect(hashedValue).toBe("hashed_value");
+		});
+
+		it("Should throw if bcrypt.hash throws", async () => {
+			jest.spyOn(bcrypt, "hash").mockImplementationOnce(() => {
+				throw new Error();
+			});
+
+			const promise = sut.generate(value);
+
+			await expect(promise).rejects.toThrow();
+		});
+	});
+
+	describe("compare", () => {
+		it("Should call bcrypt.compare with correct values", async () => {
+			const compareSpy = jest.spyOn(bcrypt, "compare");
+
+			await sut.compare(value, hash);
+
+			expect(compareSpy).toHaveBeenCalledWith(value, hash);
+		});
 	});
 });
