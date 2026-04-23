@@ -119,4 +119,12 @@ describe("LoginService", () => {
 			await expect(promise).rejects.toThrow();
 		});
 	});
+
+	it("Should return an access token on success", async () => {
+		const result = await sut.execute(param);
+
+		expect(result).toEqual({
+			accessToken: "anyToken"
+		});
+	});
 });
