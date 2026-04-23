@@ -3,7 +3,7 @@ import jwt from "jsonwebtoken";
 import { JwtService } from "@/cryptography/services/jwt.service";
 
 jest.mock("jsonwebtoken", () => ({
-	sign: jest.fn().mockReturnValue("any_token")
+	sign: jest.fn().mockReturnValue("anyToken")
 }));
 
 describe("JwtService", () => {
@@ -41,5 +41,11 @@ describe("JwtService", () => {
 		const promise = sut.generateToken(payload);
 
 		await expect(promise).rejects.toThrow();
+	});
+
+	it("Should return a token on success", async () => {
+		const token = await sut.generateToken(payload);
+
+		expect(token).toBe("anyToken");
 	});
 });
