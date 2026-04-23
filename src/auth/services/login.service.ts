@@ -17,7 +17,10 @@ export class LoginService implements LoginUseCase {
 			throw new InvalidCredentialsError();
 		}
 
-		await this.hashComparer.compare(password, user.getPassword());
+		const isMatch = await this.hashComparer.compare(password, user.getPassword());
+		if (!isMatch) {
+			throw new InvalidCredentialsError();
+		}
 
 		return {} as LoginResult;
 	}
