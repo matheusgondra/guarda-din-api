@@ -80,4 +80,12 @@ describe("LoginService", () => {
 
 		await expect(promise).rejects.toThrow();
 	});
+
+	it("Should throw InvalidCredentialsError if HashComparer returns false", async () => {
+		jest.spyOn(hashComparer, "compare").mockResolvedValueOnce(false);
+
+		const promise = sut.execute(param);
+
+		await expect(promise).rejects.toThrow(new InvalidCredentialsError());
+	});
 });
