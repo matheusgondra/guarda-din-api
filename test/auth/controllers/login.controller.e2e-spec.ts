@@ -2,6 +2,7 @@ import { INestApplication } from "@nestjs/common";
 import { Test } from "@nestjs/testing";
 import request from "supertest";
 import { AppModule } from "@/app.module";
+import { ErrorResponseDTO } from "@/common/dto/error-response.dto";
 import { PrismaService } from "@/database/services/prisma.service";
 
 describe("LoginController (e2e)", () => {
@@ -12,6 +13,10 @@ describe("LoginController (e2e)", () => {
 	const requestBody = {
 		email: "fulano.de.tal@email.com",
 		password: "StrongPassword123!"
+	};
+	const invalidRequestBody = {
+		email: "fulano.de.tal@email.com",
+		password: "WrongPassword!123"
 	};
 
 	beforeAll(async () => {
@@ -51,6 +56,20 @@ describe("LoginController (e2e)", () => {
 					expect(status).toBe(200);
 					expect(body).toEqual({
 						accessToken: expect.any(String)
+					});
+				});
+		});
+
+		it("Should return 401 if credentials are invalid", async () => {
+			return request(app.getHttpServer())
+				.post(route)
+				.send(invalidRequestBody)
+				.expect(({ body, status }) => {
+					expect(status).toBe(401);
+					expect(body).toEqual({
+						statusCode: 401,
+						message: "Invalid credentials",
+						timestamp: expect.any(String)
 					});
 				});
 		});
