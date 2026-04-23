@@ -1,5 +1,6 @@
 import { Injectable } from "@nestjs/common";
 import { HashComparer } from "@/cryptography/protocols/hash-comparer.protocol";
+import { TokenGenerator } from "@/cryptography/protocols/token-generator.protocol";
 import { InvalidCredentialsError } from "@/domain/errors/invalid-credentials.error";
 import { LoginParam, LoginResult, LoginUseCase } from "@/domain/usecases/login.usecase";
 import { LoadUserByEmailRepository } from "@/user/protocols/load-user-by-email-repository.protocol";
@@ -8,7 +9,8 @@ import { LoadUserByEmailRepository } from "@/user/protocols/load-user-by-email-r
 export class LoginService implements LoginUseCase {
 	constructor(
 		private readonly loadUserByEmailRepository: LoadUserByEmailRepository,
-		private readonly hashComparer: HashComparer
+		private readonly hashComparer: HashComparer,
+		private readonly tokenGenerator: TokenGenerator
 	) {}
 
 	async execute({ email, password }: LoginParam): Promise<LoginResult> {
@@ -21,6 +23,8 @@ export class LoginService implements LoginUseCase {
 		if (!isMatch) {
 			throw new InvalidCredentialsError();
 		}
+
+		await this.tokenGenerator.generateToken(user.getId());
 
 		return {} as LoginResult;
 	}
