@@ -36,4 +36,12 @@ describe("LoginService", () => {
 
 		expect(loadByEmailSpy).toHaveBeenCalledWith(param.email);
 	});
+
+	it("Should throw if LoadUserByEmailRepository throws", async () => {
+		jest.spyOn(loadUserByEmailRepository, "loadByEmail").mockRejectedValueOnce(new Error());
+
+		const promise = sut.execute(param);
+
+		await expect(promise).rejects.toThrow();
+	});
 });
