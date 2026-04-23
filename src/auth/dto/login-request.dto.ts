@@ -1,9 +1,7 @@
 import { createZodDto } from "nestjs-zod";
-import z from "zod";
+import { z } from "zod";
 
-const signupRequestSchema = z.object({
-	firstName: z.string().min(3),
-	lastName: z.string().min(3),
+const loginRequestSchema = z.object({
 	email: z.email(),
 	password: z
 		.string()
@@ -14,4 +12,4 @@ const signupRequestSchema = z.object({
 		.regex(/[@$!%*?&]/, "password must contain at least one special character")
 });
 
-export class SignupRequestDTO extends createZodDto(signupRequestSchema) {}
+export class LoginRequestDTO extends createZodDto(loginRequestSchema) {}

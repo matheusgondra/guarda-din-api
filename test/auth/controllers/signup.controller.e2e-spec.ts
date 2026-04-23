@@ -39,7 +39,6 @@ describe("SignupController (e2e)", () => {
 
 	afterAll(async () => {
 		await prismaService.user.deleteMany();
-		await prismaService.$disconnect();
 		await app.close();
 	});
 
