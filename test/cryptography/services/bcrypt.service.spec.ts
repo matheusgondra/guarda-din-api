@@ -74,5 +74,11 @@ describe("BCryptService", () => {
 
 			await expect(promise).rejects.toThrow();
 		});
+
+		it("Should return true if bcrypt.compare returns true", async () => {
+			const isValid = await sut.compare(value, hash);
+
+			expect(isValid).toBe(true);
+		});
 	});
 });
