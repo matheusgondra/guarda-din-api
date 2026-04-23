@@ -24,8 +24,8 @@ export class LoginService implements LoginUseCase {
 			throw new InvalidCredentialsError();
 		}
 
-		await this.tokenGenerator.generateToken(user.getId());
+		const accessToken = await this.tokenGenerator.generateToken(user.getId());
 
-		return {} as LoginResult;
+		return { accessToken };
 	}
 }
