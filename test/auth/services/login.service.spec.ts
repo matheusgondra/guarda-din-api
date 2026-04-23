@@ -1,5 +1,7 @@
 import { Test } from "@nestjs/testing";
+import { UserMock } from "@test/user/mock/user.mock";
 import { LoginService } from "@/auth/services/login.service";
+import { InvalidCredentialsError } from "@/domain/errors/invalid-credentials.error";
 import { LoginParam } from "@/domain/usecases/login.usecase";
 import { LoadUserByEmailRepository } from "@/user/protocols/load-user-by-email-repository.protocol";
 
@@ -8,6 +10,7 @@ describe("LoginService", () => {
 		email: "any@email.com",
 		password: "anyPassword"
 	};
+	const userMock = new UserMock();
 
 	let sut: LoginService;
 	let loadUserByEmailRepository: LoadUserByEmailRepository;
@@ -19,7 +22,7 @@ describe("LoginService", () => {
 				{
 					provide: LoadUserByEmailRepository,
 					useValue: {
-						loadByEmail: jest.fn()
+						loadByEmail: jest.fn().mockResolvedValue(userMock)
 					}
 				}
 			]
@@ -43,5 +46,13 @@ describe("LoginService", () => {
 		const promise = sut.execute(param);
 
 		await expect(promise).rejects.toThrow();
+	});
+
+	it("Should throw InvalidCredentialsError if LoadUserByEmailRepository returns null", async () => {
+		jest.spyOn(loadUserByEmailRepository, "loadByEmail").mockResolvedValueOnce(null);
+
+		const promise = sut.execute(param);
+
+		await expect(promise).rejects.toThrow(new InvalidCredentialsError());
 	});
 });
