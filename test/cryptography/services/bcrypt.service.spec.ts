@@ -64,5 +64,15 @@ describe("BCryptService", () => {
 
 			expect(compareSpy).toHaveBeenCalledWith(value, hash);
 		});
+
+		it("Should throw if bcrypt.compare throws", async () => {
+			jest.spyOn(bcrypt, "compare").mockImplementationOnce(() => {
+				throw new Error();
+			});
+
+			const promise = sut.compare(value, hash);
+
+			await expect(promise).rejects.toThrow();
+		});
 	});
 });
