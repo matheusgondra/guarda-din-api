@@ -72,4 +72,12 @@ describe("LoginService", () => {
 
 		expect(compareSpy).toHaveBeenCalledWith(param.password, userMock.getPassword());
 	});
+
+	it("Should throw if HashComparer throws", async () => {
+		jest.spyOn(hashComparer, "compare").mockRejectedValueOnce(new Error());
+
+		const promise = sut.execute(param);
+
+		await expect(promise).rejects.toThrow();
+	});
 });
