@@ -62,5 +62,15 @@ describe("JwtService", () => {
 
 			expect(verifySpy).toHaveBeenCalledWith(token, secret);
 		});
+
+		it("Should throw if jwt.verify throws", async () => {
+			jest.spyOn(jwt, "verify").mockImplementationOnce(() => {
+				throw new Error();
+			});
+
+			const promise = sut.verify(token);
+
+			await expect(promise).rejects.toThrow();
+		})
 	});
 });
