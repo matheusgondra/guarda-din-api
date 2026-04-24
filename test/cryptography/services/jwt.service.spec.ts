@@ -1,5 +1,6 @@
 import { Test } from "@nestjs/testing";
 import jwt from "jsonwebtoken";
+import { TokenPayloadDTO } from "@/cryptography/dto/token-payload.dto";
 import { JwtService } from "@/cryptography/services/jwt.service";
 
 jest.mock("jsonwebtoken", () => ({
@@ -29,25 +30,25 @@ describe("JwtService", () => {
 	describe("generateToken", () => {
 		it("Should call jwt.sign with correct values", async () => {
 			const signSpy = jest.spyOn(jwt, "sign");
-	
+
 			await sut.generateToken(payload);
-	
+
 			expect(signSpy).toHaveBeenCalledWith({ sub: payload }, secret, { expiresIn: "1h" });
 		});
-	
+
 		it("Should throw if jwt.sign throws", async () => {
 			jest.spyOn(jwt, "sign").mockImplementationOnce(() => {
 				throw new Error();
 			});
-	
+
 			const promise = sut.generateToken(payload);
-	
+
 			await expect(promise).rejects.toThrow();
 		});
-	
+
 		it("Should return a token on success", async () => {
 			const token = await sut.generateToken(payload);
-	
+
 			expect(token).toBe("anyToken");
 		});
 	});
@@ -71,6 +72,14 @@ describe("JwtService", () => {
 			const promise = sut.verify(token);
 
 			await expect(promise).rejects.toThrow();
-		})
+		});
+
+		it("Should return a TokenPayloadDTO on success", async () => {
+			const result = await sut.verify(token);
+
+			const expected = new TokenPayloadDTO("anyPayload", 1234567890, 1234567890);
+
+			expect(result).toEqual(expected);
+		});
 	});
 });
