@@ -69,5 +69,20 @@ describe("ExpenseRepository", () => {
 
 			await expect(promise).rejects.toThrow("Database error");
 		});
+
+		it("Should return an expense on success", async () => {
+			const expense = await sut.add(expenseMock);
+
+			expect(expense).toEqual({
+				id: expenseMock.getId(),
+				amount: expenseMock.getAmount(),
+				description: expenseMock.getDescription(),
+				date: expenseMock.getDate(),
+				userId: expenseMock.getUserId(),
+				category: expenseMock.getCategory(),
+				createdAt: expenseMock.getCreatedAt(),
+				updatedAt: expenseMock.getUpdatedAt()
+			});
+		});
 	});
 });
