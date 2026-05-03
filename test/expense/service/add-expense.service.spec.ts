@@ -47,4 +47,12 @@ describe("AddExpenseService", () => {
 			id: ""
 		});
 	});
+
+	it("Should throw if AddExpenseRepository throws", async () => {
+		jest.spyOn(addExpenseRepository, "add").mockRejectedValueOnce(new Error());
+
+		const promise = sut.execute(param);
+
+		await expect(promise).rejects.toThrow();
+	});
 });
