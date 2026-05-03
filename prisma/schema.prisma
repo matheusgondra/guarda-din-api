@@ -22,5 +22,34 @@ model User {
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
+  expenses Expense[]
+
   @@map("users")
+}
+
+model Category {
+  id        Int      @id @default(autoincrement())
+  name      String   @db.VarChar(255)
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  expenses Expense[]
+
+  @@map("categories")
+}
+
+model Expense {
+  id          String   @id @default(uuid(7))
+  amount      Decimal  @db.Decimal(10, 4)
+  description String   @db.VarChar(255)
+  date        DateTime
+  categoryId  Int
+  userId      String
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  category Category @relation(fields: [categoryId], references: [id])
+  user     User     @relation(fields: [userId], references: [id])
+
+  @@map("expenses")
 }
