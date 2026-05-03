@@ -1,13 +1,13 @@
 import jwt from "jsonwebtoken";
+import { TokenPayloadDTO } from "../dto/token-payload.dto";
 import { TokenGenerator } from "../protocols/token-generator.protocol";
 import { TokenVerify } from "../protocols/token-verify.protocol";
-import { TokenPayloadDTO } from "../dto/token-payload.dto";
 
 type JwtPayload = {
 	sub: string;
 	exp: number;
 	iat: number;
-}
+};
 
 export class JwtService implements TokenGenerator, TokenVerify {
 	constructor(private readonly secret: string) {}

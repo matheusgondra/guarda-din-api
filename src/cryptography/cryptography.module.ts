@@ -4,6 +4,7 @@ import { Env } from "@/env.validation";
 import { HashComparer } from "./protocols/hash-comparer.protocol";
 import { HashGenerator } from "./protocols/hash-generator.protocol";
 import { TokenGenerator } from "./protocols/token-generator.protocol";
+import { TokenVerify } from "./protocols/token-verify.protocol";
 import { BCryptService } from "./services/bcrypt.service";
 import { JwtService } from "./services/jwt.service";
 
@@ -30,8 +31,12 @@ import { JwtService } from "./services/jwt.service";
 
 				return new JwtService(secret);
 			}
+		},
+		{
+			provide: TokenVerify,
+			useExisting: TokenGenerator
 		}
 	],
-	exports: [HashGenerator, HashComparer, TokenGenerator]
+	exports: [HashGenerator, HashComparer, TokenGenerator, TokenVerify]
 })
 export class CryptographyModule {}

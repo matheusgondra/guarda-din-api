@@ -1,7 +1,7 @@
 import { Module } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
 import { APP_FILTER, APP_INTERCEPTOR, APP_PIPE } from "@nestjs/core";
-import { ZodSerializerInterceptor, ZodValidationPipe } from "nestjs-zod";
+import { ZodSerializerInterceptor } from "nestjs-zod";
 import { AuthModule } from "./auth/auth.module";
 import { ConflictExceptionFilter } from "./common/filters/conflict-exception.filter";
 import { ServerErrorExceptionFilter } from "./common/filters/server-error-exception.filter";
