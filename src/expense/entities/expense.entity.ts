@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { Category } from "@/domain/models/category";
+import { Category, type CategoryValue } from "@/domain/models/category";
 import { Money } from "@/domain/models/money";
 
 const expenseDataSchema = z.object({
@@ -7,7 +7,15 @@ const expenseDataSchema = z.object({
 	date: z.date(),
 	amount: z.instanceof(Money),
 	description: z.string(),
-	category: z.enum(Object.values(Category)),
+	category: z.transform((value) => {
+		if (typeof value === "string") {
+			return Category.from(value);
+		} else if (value instanceof Category) {
+			return value;
+		}
+		throw new Error("Invalid category value");
+	}),
+	userId: z.uuidv7(),
 	createdAt: z.date().optional(),
 	updatedAt: z.date().optional()
 });
@@ -20,6 +28,7 @@ export class Expense {
 	private amount: Money;
 	private description: string;
 	private category: Category;
+	private userId: string;
 	private createdAt: Date;
 	private updatedAt: Date;
 
@@ -30,6 +39,7 @@ export class Expense {
 		this.amount = parsedData.amount;
 		this.description = parsedData.description;
 		this.category = parsedData.category;
+		this.userId = parsedData.userId;
 		this.createdAt = parsedData.createdAt || new Date();
 		this.updatedAt = parsedData.updatedAt || new Date();
 	}
@@ -52,6 +62,10 @@ export class Expense {
 
 	getCategory(): Category {
 		return this.category;
+	}
+
+	getUserId(): string {
+		return this.userId;
 	}
 
 	getCreatedAt(): Date {

@@ -1,4 +1,5 @@
 import { Test } from "@nestjs/testing";
+import { UserMock } from "@test/user/mock/user.mock";
 import { Category } from "@/domain/models/category";
 import { Money } from "@/domain/models/money";
 import { AddExpenseParam, AddExpenseResult } from "@/domain/usecases/expense/add-expense.usecase";
@@ -11,8 +12,9 @@ describe("AddExpenseService", () => {
 	let addExpenseRepository: AddExpenseRepository;
 
 	const param: AddExpenseParam = {
+		userId: new UserMock().getId(),
 		amount: new Money(100),
-		category: Category.Food,
+		category: Category.FOOD,
 		date: new Date("2023-11-23"),
 		description: "any_description"
 	};

@@ -6,6 +6,7 @@ export type AddExpenseParam = {
 	amount: Money;
 	description: string;
 	category: Category;
+	userId: string;
 };
 
 export type AddExpenseResult = {
@@ -18,6 +19,6 @@ export type AddExpenseResult = {
 	updatedAt: Date;
 };
 
-export interface AddExpenseUseCase {
-	execute(param: AddExpenseParam): Promise<AddExpenseResult>;
+export abstract class AddExpenseUseCase {
+	abstract execute(param: AddExpenseParam): Promise<AddExpenseResult>;
 }

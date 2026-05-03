@@ -9,7 +9,7 @@ const categories = Object.values(Category);
 
 async function main() {
 	await prisma.category.createMany({
-		data: categories.map((name) => ({ name })),
+		data: categories.map((category) => ({ name: category.getValue() })),
 		skipDuplicates: true
 	});
 }

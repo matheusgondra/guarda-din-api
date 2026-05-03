@@ -29,7 +29,7 @@ model User {
 
 model Category {
   id        Int      @id @default(autoincrement())
-  name      String   @db.VarChar(255)
+  name      String   @unique @db.VarChar(255)
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
@@ -44,7 +44,7 @@ model Expense {
   description String   @db.VarChar(255)
   date        DateTime
   categoryId  Int
-  userId      String
+  userId      String   @map("user_id")
   createdAt   DateTime @default(now()) @map("created_at")
   updatedAt   DateTime @updatedAt @map("updated_at")
 
