@@ -4,7 +4,7 @@ import { LoginService } from "@/auth/services/login.service";
 import { HashComparer } from "@/cryptography/protocols/hash-comparer.protocol";
 import { TokenGenerator } from "@/cryptography/protocols/token-generator.protocol";
 import { InvalidCredentialsError } from "@/domain/errors/invalid-credentials.error";
-import { LoginParam } from "@/domain/usecases/login.usecase";
+import { LoginParam } from "@/domain/usecases/auth/login.usecase";
 import { LoadUserByEmailRepository } from "@/user/protocols/load-user-by-email-repository.protocol";
 
 describe("LoginService", () => {

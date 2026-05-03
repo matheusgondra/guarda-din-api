@@ -2,7 +2,7 @@ import { Body, Controller, HttpCode, HttpStatus, Logger, Post } from "@nestjs/co
 import { ApiOkResponse, ApiTags } from "@nestjs/swagger";
 import { ApiBadRequest } from "@/common/docs/api-bad-request";
 import { ApiUnauthorized } from "@/common/docs/api-unauthorized";
-import { LoginUseCase } from "@/domain/usecases/login.usecase";
+import { LoginUseCase } from "@/domain/usecases/auth/login.usecase";
 import { LoginRequestDTO } from "../dto/login-request.dto";
 import { LoginResponseDTO } from "../dto/login-response.dto";
 

@@ -1,7 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { HashGenerator } from "@/cryptography/protocols/hash-generator.protocol";
 import { UserAlreadyExistsError } from "@/domain/errors/user-already-exists.error";
-import { SignupParam, SignupResult, SignupUseCase } from "@/domain/usecases/signup.usecase";
+import { SignupParam, SignupResult, SignupUseCase } from "@/domain/usecases/auth/signup.usecase";
 import { User } from "@/user/entities/user.entity";
 import { AddUserRepository } from "@/user/protocols/add-user-repository.protocol";
 import { LoadUserByEmailRepository } from "@/user/protocols/load-user-by-email-repository.protocol";

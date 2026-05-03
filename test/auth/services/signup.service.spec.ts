@@ -3,7 +3,7 @@ import { UserMock } from "@test/user/mock/user.mock";
 import { SignupService } from "@/auth/services/signup.service";
 import { HashGenerator } from "@/cryptography/protocols/hash-generator.protocol";
 import { UserAlreadyExistsError } from "@/domain/errors/user-already-exists.error";
-import { SignupParam } from "@/domain/usecases/signup.usecase";
+import { SignupParam } from "@/domain/usecases/auth/signup.usecase";
 import { AddUserRepository } from "@/user/protocols/add-user-repository.protocol";
 import { LoadUserByEmailRepository } from "@/user/protocols/load-user-by-email-repository.protocol";
 
