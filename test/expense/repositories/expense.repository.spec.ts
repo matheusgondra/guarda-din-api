@@ -39,9 +39,11 @@ describe("ExpenseRepository", () => {
 
 	describe("add", () => {
 		it("Should call prismaService.expense.create with correct values", async () => {
+			const createSpy = jest.spyOn(prismaService.expense, "create");
+
 			await sut.add(expenseMock);
 
-			expect(prismaService.expense.create).toHaveBeenCalledWith({
+			expect(createSpy).toHaveBeenCalledWith({
 				data: {
 					amount: expenseMock.getAmount().getValue(),
 					date: expenseMock.getDate(),
@@ -58,6 +60,14 @@ describe("ExpenseRepository", () => {
 					}
 				}
 			});
+		});
+
+		it("Should throw if prismaService.expense.create throws", async () => {
+			jest.spyOn(prismaService.expense, "create").mockRejectedValueOnce(new Error("Database error"));
+
+			const promise = sut.add(expenseMock);
+
+			await expect(promise).rejects.toThrow("Database error");
 		});
 	});
 });
