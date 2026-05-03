@@ -9,8 +9,16 @@ export class AddExpenseService implements AddExpenseUseCase {
 
 	async execute(param: AddExpenseParam): Promise<AddExpenseResult> {
 		const expense = new Expense(param);
-		await this.addExpenseRepository.add(expense);
+		const expenseCreated = await this.addExpenseRepository.add(expense);
 
-		return {} as AddExpenseResult;
+		return {
+			id: expenseCreated.getId(),
+			date: expenseCreated.getDate(),
+			amount: expenseCreated.getAmount(),
+			description: expenseCreated.getDescription(),
+			category: expenseCreated.getCategory(),
+			createdAt: expenseCreated.getCreatedAt(),
+			updatedAt: expenseCreated.getUpdatedAt()
+		};
 	}
 }
