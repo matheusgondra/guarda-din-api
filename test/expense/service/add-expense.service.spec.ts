@@ -1,7 +1,7 @@
 import { Test } from "@nestjs/testing";
 import { Category } from "@/domain/models/category";
 import { Money } from "@/domain/models/money";
-import { AddExpenseParam } from "@/domain/usecases/expense/add-expense.usecase";
+import { AddExpenseParam, AddExpenseResult } from "@/domain/usecases/expense/add-expense.usecase";
 import { AddExpenseRepository } from "@/expense/protocols/add-expense-repository.protocol";
 import { AddExpenseService } from "@/expense/services/add-expense.service";
 import { ExpenseMock } from "../mock/expense.mock";
@@ -17,6 +17,15 @@ describe("AddExpenseService", () => {
 		description: "any_description"
 	};
 	const expenseMock = new ExpenseMock();
+	const expectedResult: AddExpenseResult = {
+		id: expenseMock.getId(),
+		amount: expenseMock.getAmount(),
+		category: expenseMock.getCategory(),
+		date: expenseMock.getDate(),
+		description: expenseMock.getDescription(),
+		createdAt: expenseMock.getCreatedAt(),
+		updatedAt: expenseMock.getUpdatedAt()
+	};
 
 	beforeEach(async () => {
 		const module = await Test.createTestingModule({
@@ -25,7 +34,7 @@ describe("AddExpenseService", () => {
 				{
 					provide: AddExpenseRepository,
 					useValue: {
-						add: jest.fn()
+						add: jest.fn().mockResolvedValue(expenseMock)
 					}
 				}
 			]
@@ -54,5 +63,11 @@ describe("AddExpenseService", () => {
 		const promise = sut.execute(param);
 
 		await expect(promise).rejects.toThrow();
+	});
+
+	it("Should return an AddExpenseResult on success", async () => {
+		const result = await sut.execute(param);
+
+		expect(result).toEqual(expectedResult);
 	});
 });
