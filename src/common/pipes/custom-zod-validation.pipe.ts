@@ -16,5 +16,5 @@ export const CustomZodValidationPipe: Type<PipeTransform> = createZodValidationP
 		const validationErrorResponse = new ValidationErrorResponseDTO(errors);
 		return new BadRequestException(validationErrorResponse);
 	},
-	strictSchemaDeclaration: true
+	strictSchemaDeclaration: false
 });

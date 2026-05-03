@@ -32,7 +32,13 @@ export class Category {
 	private constructor(private readonly value: string) {}
 
 	static from(value: string): Category {
-		const match = Object.values(Category).find((category) => category.getValue() === value);
+		const match = Object.values(Category).find((category) => {
+			if (category instanceof Category) {
+				return category.getValue() === value;
+			}
+
+			return false;
+		});
 
 		return match || Category.OTHERS;
 	}

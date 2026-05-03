@@ -8,6 +8,7 @@ import { ServerErrorExceptionFilter } from "./common/filters/server-error-except
 import { UnauthorizedExceptionFilter } from "./common/filters/unauthorized-exception.filter";
 import { CustomZodValidationPipe } from "./common/pipes/custom-zod-validation.pipe";
 import { validateEnv } from "./env.validation";
+import { ExpenseModule } from "./expense/expense.module";
 
 @Module({
 	imports: [
@@ -20,7 +21,8 @@ import { validateEnv } from "./env.validation";
 			envFilePath: process.env.NODE_ENV === "test" ? ".env.test" : ".env",
 			validate: validateEnv
 		}),
-		AuthModule
+		AuthModule,
+		ExpenseModule
 	],
 	providers: [
 		{
