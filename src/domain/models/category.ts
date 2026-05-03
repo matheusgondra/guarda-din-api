@@ -42,7 +42,7 @@ export class Category {
 			return Category.OTHERS;
 		}
 
-		return Category.categoryList[id];
+		return Category.categoryList[id - 1];
 	}
 
 	getValue(): string {
