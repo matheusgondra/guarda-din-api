@@ -16,6 +16,10 @@ describe("AddExpenseController (e2e)", () => {
 		date: new Date().toISOString(),
 		category: "Food"
 	};
+	const invalidBody = {
+		...requestBody,
+		description: ""
+	};
 
 	beforeAll(async () => {
 		const module = await Test.createTestingModule({
@@ -70,5 +74,13 @@ describe("AddExpenseController (e2e)", () => {
 					updatedAt: expect.any(String)
 				});
 			});
+	});
+
+	it("Should return 401 if request is invalid", async () => {
+		return request(app.getHttpServer())
+			.post(route)
+			.set("Authorization", `Bearer ${accessToken}`)
+			.send(invalidBody)
+			.expect(400);
 	});
 });
