@@ -2,6 +2,7 @@ import { Test } from "@nestjs/testing";
 import { LoadExpenseParam } from "@/domain/usecases/expense/load-expense.usecase";
 import { LoadExpenseRepository } from "@/expense/protocols/load-expense-repository.protocol";
 import { LoadExpenseService } from "@/expense/services/load-expense.service";
+import { ExpenseMock } from "../mock/expense.mock";
 
 describe("LoadExpenseService", () => {
 	let sut: LoadExpenseService;
@@ -13,6 +14,8 @@ describe("LoadExpenseService", () => {
 		pageSize: 10
 	};
 
+	const mockedExpense = new ExpenseMock();
+
 	beforeEach(async () => {
 		const module = await Test.createTestingModule({
 			providers: [
@@ -20,7 +23,7 @@ describe("LoadExpenseService", () => {
 				{
 					provide: LoadExpenseRepository,
 					useValue: {
-						load: jest.fn()
+						load: jest.fn().mockResolvedValue([mockedExpense])
 					}
 				}
 			]
@@ -48,5 +51,26 @@ describe("LoadExpenseService", () => {
 		const promise = sut.execute(param);
 
 		await expect(promise).rejects.toThrow();
+	});
+
+	it("Should return LoadExpenseResult on success", async () => {
+		const result = await sut.execute(param);
+
+		expect(result).toEqual({
+			data: [
+				{
+					id: mockedExpense.getId(),
+					amount: mockedExpense.getAmount(),
+					date: mockedExpense.getDate(),
+					description: mockedExpense.getDescription(),
+					category: mockedExpense.getCategory().getValue(),
+					createdAt: mockedExpense.getCreatedAt(),
+					updatedAt: mockedExpense.getUpdatedAt()
+				}
+			],
+			total: 1,
+			page: 1,
+			pageSize: 10
+		});
 	});
 });
