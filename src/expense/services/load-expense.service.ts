@@ -11,11 +11,27 @@ export class LoadExpenseService implements LoadExpenseUseCase {
 	constructor(private readonly loadExpenseRepository: LoadExpenseRepository) {}
 
 	async execute({ page, pageSize, userId }: LoadExpenseParam): Promise<LoadExpenseResult> {
-		await this.loadExpenseRepository.load({
+		const expenses = await this.loadExpenseRepository.load({
 			userId,
 			page,
 			limit: pageSize
 		});
-		return {} as LoadExpenseResult;
+
+		const data = expenses.map((expense) => ({
+			id: expense.getId(),
+			amount: expense.getAmount(),
+			date: expense.getDate(),
+			description: expense.getDescription(),
+			category: expense.getCategory().getValue(),
+			createdAt: expense.getCreatedAt(),
+			updatedAt: expense.getUpdatedAt()
+		}));
+
+		return {
+			data,
+			total: expenses.length,
+			page,
+			pageSize
+		};
 	}
 }
