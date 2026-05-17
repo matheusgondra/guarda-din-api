@@ -41,4 +41,12 @@ describe("LoadExpenseService", () => {
 			limit: param.pageSize
 		});
 	});
+
+	it("Should throw if LoadExpenseRepository throws", async () => {
+		jest.spyOn(loadExpenseRepository, "load").mockRejectedValueOnce(new Error());
+
+		const promise = sut.execute(param);
+
+		await expect(promise).rejects.toThrow();
+	});
 });
