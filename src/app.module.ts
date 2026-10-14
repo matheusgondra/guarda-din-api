@@ -15,8 +15,10 @@ import { ExpenseModule } from "./expense/expense.module.js";
 		ConfigModule.forRoot({
 			isGlobal: true,
 			validationOptions: {
-				allowUnknown: false,
-				abortEarly: true
+				libraryOptions: {
+					allowUnknown: false,
+					abortEarly: true
+				}
 			},
 			envFilePath: process.env.NODE_ENV === "test" ? ".env.test" : ".env",
 			validate: validateEnv
