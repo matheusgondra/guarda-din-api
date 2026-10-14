@@ -1,10 +1,10 @@
 import { Body, Controller, HttpCode, HttpStatus, Logger, Post } from "@nestjs/common";
 import { ApiOkResponse, ApiTags } from "@nestjs/swagger";
-import { ApiBadRequest } from "@/common/docs/api-bad-request";
-import { ApiUnauthorized } from "@/common/docs/api-unauthorized";
-import { LoginUseCase } from "@/domain/usecases/auth/login.usecase";
-import { LoginRequestDTO } from "../dto/login-request.dto";
-import { LoginResponseDTO } from "../dto/login-response.dto";
+import { ApiBadRequest } from "@/common/docs/api-bad-request.js";
+import { ApiUnauthorized } from "@/common/docs/api-unauthorized.js";
+import { LoginUseCase } from "@/domain/usecases/auth/login.usecase.js";
+import { LoginRequestDTO } from "../dto/login-request.dto.js";
+import { LoginResponseDTO } from "../dto/login-response.dto.js";
 
 @ApiTags("Auth")
 @Controller("login")

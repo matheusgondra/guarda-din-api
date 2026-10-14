@@ -1,6 +1,6 @@
 import { CanActivate, ExecutionContext, Injectable } from "@nestjs/common";
 import { Request } from "express";
-import { TokenVerify } from "@/cryptography/protocols/token-verify.protocol";
+import { TokenVerify } from "@/cryptography/protocols/token-verify.protocol.js";
 
 @Injectable()
 export class AuthGuard implements CanActivate {

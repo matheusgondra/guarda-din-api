@@ -1,6 +1,6 @@
 import { Test } from "@nestjs/testing";
 import bcrypt from "bcryptjs";
-import { BCryptService } from "@/cryptography/services/bcrypt.service";
+import { BCryptService } from "@/cryptography/services/bcrypt.service.js";
 
 vi.mock("bcryptjs", () => ({
 	__esModule: true,

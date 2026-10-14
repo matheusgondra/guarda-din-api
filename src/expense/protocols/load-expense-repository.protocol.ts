@@ -1,4 +1,4 @@
-import { Expense } from "../entities/expense.entity";
+import { Expense } from "../entities/expense.entity.js";
 
 export type Data = {
 	userId: string;

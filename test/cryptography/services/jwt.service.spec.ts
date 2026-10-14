@@ -1,7 +1,7 @@
 import { Test } from "@nestjs/testing";
 import jwt from "jsonwebtoken";
-import { TokenPayloadDTO } from "@/cryptography/dto/token-payload.dto";
-import { JwtService } from "@/cryptography/services/jwt.service";
+import { TokenPayloadDTO } from "@/cryptography/dto/token-payload.dto.js";
+import { JwtService } from "@/cryptography/services/jwt.service.js";
 
 vi.mock("jsonwebtoken", () => ({
 	default: {

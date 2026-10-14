@@ -1,8 +1,8 @@
 import { Injectable } from "@nestjs/common";
-import { PrismaService } from "@/database/services/prisma.service";
-import { Expense } from "../entities/expense.entity";
-import { ExpenseMapper } from "../mapper/expese.mapper";
-import { AddExpenseRepository } from "../protocols/add-expense-repository.protocol";
+import { PrismaService } from "@/database/services/prisma.service.js";
+import { Expense } from "../entities/expense.entity.js";
+import { ExpenseMapper } from "../mapper/expese.mapper.js";
+import { AddExpenseRepository } from "../protocols/add-expense-repository.protocol.js";
 
 @Injectable()
 export class ExpenseRepository implements AddExpenseRepository {

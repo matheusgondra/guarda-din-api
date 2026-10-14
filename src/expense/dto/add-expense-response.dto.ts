@@ -1,5 +1,5 @@
-import { Category } from "@/domain/models/category";
-import { Money } from "@/domain/models/money";
+import { Category } from "@/domain/models/category.js";
+import { Money } from "@/domain/models/money.js";
 
 export class AddExpenseResponseDTO {
 	id: string;

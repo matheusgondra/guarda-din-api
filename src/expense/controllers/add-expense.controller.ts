@@ -1,11 +1,11 @@
 import { Body, Controller, Logger, Post } from "@nestjs/common";
-import { Auth } from "@/auth/decorators/auth.decorator";
-import { Category } from "@/domain/models/category";
-import { Money } from "@/domain/models/money";
-import { AddExpenseUseCase } from "@/domain/usecases/expense/add-expense.usecase";
-import { User } from "@/user/decorators/user.decorator";
-import { AddExpenseRequestDTO } from "../dto/add-expense-request.dto";
-import { AddExpenseResponseDTO } from "../dto/add-expense-response.dto";
+import { Auth } from "@/auth/decorators/auth.decorator.js";
+import { Category } from "@/domain/models/category.js";
+import { Money } from "@/domain/models/money.js";
+import { AddExpenseUseCase } from "@/domain/usecases/expense/add-expense.usecase.js";
+import { User } from "@/user/decorators/user.decorator.js";
+import { AddExpenseRequestDTO } from "../dto/add-expense-request.dto.js";
+import { AddExpenseResponseDTO } from "../dto/add-expense-response.dto.js";
 
 @Auth()
 @Controller("expense")

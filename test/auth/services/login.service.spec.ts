@@ -1,11 +1,11 @@
 import { Test } from "@nestjs/testing";
-import { UserMock } from "@test/user/mock/user.mock";
-import { LoginService } from "@/auth/services/login.service";
-import { HashComparer } from "@/cryptography/protocols/hash-comparer.protocol";
-import { TokenGenerator } from "@/cryptography/protocols/token-generator.protocol";
-import { InvalidCredentialsError } from "@/domain/errors/invalid-credentials.error";
-import { LoginParam } from "@/domain/usecases/auth/login.usecase";
-import { LoadUserByEmailRepository } from "@/user/protocols/load-user-by-email-repository.protocol";
+import { UserMock } from "@test/user/mock/user.mock.js";
+import { LoginService } from "@/auth/services/login.service.js";
+import { HashComparer } from "@/cryptography/protocols/hash-comparer.protocol.js";
+import { TokenGenerator } from "@/cryptography/protocols/token-generator.protocol.js";
+import { InvalidCredentialsError } from "@/domain/errors/invalid-credentials.error.js";
+import { LoginParam } from "@/domain/usecases/auth/login.usecase.js";
+import { LoadUserByEmailRepository } from "@/user/protocols/load-user-by-email-repository.protocol.js";
 
 describe("LoginService", () => {
 	const param: LoginParam = {

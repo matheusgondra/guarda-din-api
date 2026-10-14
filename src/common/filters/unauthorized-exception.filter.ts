@@ -1,7 +1,7 @@
 import { ArgumentsHost, Catch, ExceptionFilter, HttpStatus } from "@nestjs/common";
 import { Response } from "express";
-import { InvalidCredentialsError } from "@/domain/errors/invalid-credentials.error";
-import { ErrorResponseDTO } from "../dto/error-response.dto";
+import { InvalidCredentialsError } from "@/domain/errors/invalid-credentials.error.js";
+import { ErrorResponseDTO } from "../dto/error-response.dto.js";
 
 @Catch(InvalidCredentialsError)
 export class UnauthorizedExceptionFilter implements ExceptionFilter {

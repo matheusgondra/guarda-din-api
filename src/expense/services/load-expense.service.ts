@@ -3,8 +3,8 @@ import {
 	LoadExpenseParam,
 	LoadExpenseResult,
 	LoadExpenseUseCase
-} from "@/domain/usecases/expense/load-expense.usecase";
-import { LoadExpenseRepository } from "../protocols/load-expense-repository.protocol";
+} from "@/domain/usecases/expense/load-expense.usecase.js";
+import { LoadExpenseRepository } from "../protocols/load-expense-repository.protocol.js";
 
 @Injectable()
 export class LoadExpenseService implements LoadExpenseUseCase {

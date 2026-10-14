@@ -1,7 +1,7 @@
 import { Test } from "@nestjs/testing";
-import { PrismaService } from "@/database/services/prisma.service";
-import { UserRepository } from "@/user/repositories/user.repository";
-import { UserMock } from "../mock/user.mock";
+import { PrismaService } from "@/database/services/prisma.service.js";
+import { UserRepository } from "@/user/repositories/user.repository.js";
+import { UserMock } from "../mock/user.mock.js";
 
 describe("UserRepository", () => {
 	const email = "any@email.com";

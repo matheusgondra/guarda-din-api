@@ -2,13 +2,13 @@ import { Module } from "@nestjs/common";
 import { ConfigModule } from "@nestjs/config";
 import { APP_FILTER, APP_INTERCEPTOR, APP_PIPE } from "@nestjs/core";
 import { ZodSerializerInterceptor } from "nestjs-zod";
-import { AuthModule } from "./auth/auth.module";
-import { ConflictExceptionFilter } from "./common/filters/conflict-exception.filter";
-import { ServerErrorExceptionFilter } from "./common/filters/server-error-exception.filter";
-import { UnauthorizedExceptionFilter } from "./common/filters/unauthorized-exception.filter";
-import { CustomZodValidationPipe } from "./common/pipes/custom-zod-validation.pipe";
-import { validateEnv } from "./env.validation";
-import { ExpenseModule } from "./expense/expense.module";
+import { AuthModule } from "./auth/auth.module.js";
+import { ConflictExceptionFilter } from "./common/filters/conflict-exception.filter.js";
+import { ServerErrorExceptionFilter } from "./common/filters/server-error-exception.filter.js";
+import { UnauthorizedExceptionFilter } from "./common/filters/unauthorized-exception.filter.js";
+import { CustomZodValidationPipe } from "./common/pipes/custom-zod-validation.pipe.js";
+import { validateEnv } from "./env.validation.js";
+import { ExpenseModule } from "./expense/expense.module.js";
 
 @Module({
 	imports: [

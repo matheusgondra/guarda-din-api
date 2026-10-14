@@ -1,8 +1,8 @@
 import { INestApplication } from "@nestjs/common";
 import { Test } from "@nestjs/testing";
 import request from "supertest";
-import { AppModule } from "@/app.module";
-import { PrismaService } from "@/database/services/prisma.service";
+import { AppModule } from "@/app.module.js";
+import { PrismaService } from "@/database/services/prisma.service.js";
 
 describe("AddExpenseController (e2e)", () => {
 	let app: INestApplication;

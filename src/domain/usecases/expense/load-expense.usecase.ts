@@ -1,5 +1,5 @@
-import { Money } from "@/domain/models/money";
-import { PageType } from "@/domain/types/page-type";
+import { Money } from "@/domain/models/money.js";
+import { PageType } from "@/domain/types/page-type.js";
 
 export type LoadExpenseParam = {
 	userId: string;

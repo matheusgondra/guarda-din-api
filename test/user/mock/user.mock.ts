@@ -1,4 +1,4 @@
-import { User } from "@/user/entities/user.entity";
+import { User } from "@/user/entities/user.entity.js";
 
 export class UserMock extends User {
 	constructor() {

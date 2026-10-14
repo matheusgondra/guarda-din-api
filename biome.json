@@ -29,6 +29,12 @@
 				"noUnusedVariables": {
 					"level": "error",
 					"fix": "none"
+				},
+				"useImportExtensions": {
+					"level": "error",
+					"options": {
+						"forceJsExtensions": true
+					}
 				}
 			},
 			"style": {

@@ -1,7 +1,7 @@
-import { UserMock } from "@test/user/mock/user.mock";
-import { Category } from "@/domain/models/category";
-import { Money } from "@/domain/models/money";
-import { Expense } from "@/expense/entities/expense.entity";
+import { UserMock } from "@test/user/mock/user.mock.js";
+import { Category } from "@/domain/models/category.js";
+import { Money } from "@/domain/models/money.js";
+import { Expense } from "@/expense/entities/expense.entity.js";
 
 export class ExpenseMock extends Expense {
 	constructor() {

@@ -1,12 +1,12 @@
 import { Module } from "@nestjs/common";
-import { CryptographyModule } from "@/cryptography/cryptography.module";
-import { DatabaseModule } from "@/database/database.module";
-import { LoginUseCase } from "@/domain/usecases/auth/login.usecase";
-import { SignupUseCase } from "@/domain/usecases/auth/signup.usecase";
-import { LoginController } from "./controllers/login.controller";
-import { SignupController } from "./controllers/signup.controller";
-import { LoginService } from "./services/login.service";
-import { SignupService } from "./services/signup.service";
+import { CryptographyModule } from "@/cryptography/cryptography.module.js";
+import { DatabaseModule } from "@/database/database.module.js";
+import { LoginUseCase } from "@/domain/usecases/auth/login.usecase.js";
+import { SignupUseCase } from "@/domain/usecases/auth/signup.usecase.js";
+import { LoginController } from "./controllers/login.controller.js";
+import { SignupController } from "./controllers/signup.controller.js";
+import { LoginService } from "./services/login.service.js";
+import { SignupService } from "./services/signup.service.js";
 
 @Module({
 	imports: [DatabaseModule, CryptographyModule],

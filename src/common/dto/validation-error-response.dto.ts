@@ -1,5 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { ErrorResponseDTO } from "./error-response.dto";
+import { ErrorResponseDTO } from "./error-response.dto.js";
 
 class ValidationErrorDetail {
 	@ApiProperty({

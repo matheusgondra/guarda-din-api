@@ -1,11 +1,11 @@
 import { Test } from "@nestjs/testing";
-import { UserMock } from "@test/user/mock/user.mock";
-import { SignupService } from "@/auth/services/signup.service";
-import { HashGenerator } from "@/cryptography/protocols/hash-generator.protocol";
-import { UserAlreadyExistsError } from "@/domain/errors/user-already-exists.error";
-import { SignupParam } from "@/domain/usecases/auth/signup.usecase";
-import { AddUserRepository } from "@/user/protocols/add-user-repository.protocol";
-import { LoadUserByEmailRepository } from "@/user/protocols/load-user-by-email-repository.protocol";
+import { UserMock } from "@test/user/mock/user.mock.js";
+import { SignupService } from "@/auth/services/signup.service.js";
+import { HashGenerator } from "@/cryptography/protocols/hash-generator.protocol.js";
+import { UserAlreadyExistsError } from "@/domain/errors/user-already-exists.error.js";
+import { SignupParam } from "@/domain/usecases/auth/signup.usecase.js";
+import { AddUserRepository } from "@/user/protocols/add-user-repository.protocol.js";
+import { LoadUserByEmailRepository } from "@/user/protocols/load-user-by-email-repository.protocol.js";
 
 describe("SignupService", () => {
 	let sut: SignupService;

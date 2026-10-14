@@ -1,7 +1,7 @@
 import { ArgumentsHost, Catch, ExceptionFilter, HttpStatus } from "@nestjs/common";
 import { Response } from "express";
-import { UserAlreadyExistsError } from "@/domain/errors/user-already-exists.error";
-import { ErrorResponseDTO } from "../dto/error-response.dto";
+import { UserAlreadyExistsError } from "@/domain/errors/user-already-exists.error.js";
+import { ErrorResponseDTO } from "../dto/error-response.dto.js";
 
 @Catch(UserAlreadyExistsError)
 export class ConflictExceptionFilter implements ExceptionFilter {

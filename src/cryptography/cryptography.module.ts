@@ -1,12 +1,12 @@
 import { Module } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
-import { Env } from "@/env.validation";
-import { HashComparer } from "./protocols/hash-comparer.protocol";
-import { HashGenerator } from "./protocols/hash-generator.protocol";
-import { TokenGenerator } from "./protocols/token-generator.protocol";
-import { TokenVerify } from "./protocols/token-verify.protocol";
-import { BCryptService } from "./services/bcrypt.service";
-import { JwtService } from "./services/jwt.service";
+import { Env } from "@/env.validation.js";
+import { HashComparer } from "./protocols/hash-comparer.protocol.js";
+import { HashGenerator } from "./protocols/hash-generator.protocol.js";
+import { TokenGenerator } from "./protocols/token-generator.protocol.js";
+import { TokenVerify } from "./protocols/token-verify.protocol.js";
+import { BCryptService } from "./services/bcrypt.service.js";
+import { JwtService } from "./services/jwt.service.js";
 
 @Module({
 	providers: [

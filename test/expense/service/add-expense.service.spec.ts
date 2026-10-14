@@ -1,11 +1,11 @@
 import { Test } from "@nestjs/testing";
-import { UserMock } from "@test/user/mock/user.mock";
-import { Category } from "@/domain/models/category";
-import { Money } from "@/domain/models/money";
-import { AddExpenseParam, AddExpenseResult } from "@/domain/usecases/expense/add-expense.usecase";
-import { AddExpenseRepository } from "@/expense/protocols/add-expense-repository.protocol";
-import { AddExpenseService } from "@/expense/services/add-expense.service";
-import { ExpenseMock } from "../mock/expense.mock";
+import { UserMock } from "@test/user/mock/user.mock.js";
+import { Category } from "@/domain/models/category.js";
+import { Money } from "@/domain/models/money.js";
+import { AddExpenseParam, AddExpenseResult } from "@/domain/usecases/expense/add-expense.usecase.js";
+import { AddExpenseRepository } from "@/expense/protocols/add-expense-repository.protocol.js";
+import { AddExpenseService } from "@/expense/services/add-expense.service.js";
+import { ExpenseMock } from "../mock/expense.mock.js";
 
 describe("AddExpenseService", () => {
 	let sut: AddExpenseService;
