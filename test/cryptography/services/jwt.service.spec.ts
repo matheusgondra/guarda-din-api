@@ -3,9 +3,11 @@ import jwt from "jsonwebtoken";
 import { TokenPayloadDTO } from "@/cryptography/dto/token-payload.dto";
 import { JwtService } from "@/cryptography/services/jwt.service";
 
-jest.mock("jsonwebtoken", () => ({
-	sign: jest.fn().mockReturnValue("anyToken"),
-	verify: jest.fn().mockReturnValue({ sub: "anyPayload", exp: 1234567890, iat: 1234567890 })
+vi.mock("jsonwebtoken", () => ({
+	default: {
+		sign: vi.fn().mockReturnValue("anyToken"),
+		verify: vi.fn().mockReturnValue({ sub: "anyPayload", exp: 1234567890, iat: 1234567890 })
+	}
 }));
 
 describe("JwtService", () => {
@@ -29,7 +31,7 @@ describe("JwtService", () => {
 
 	describe("generateToken", () => {
 		it("Should call jwt.sign with correct values", async () => {
-			const signSpy = jest.spyOn(jwt, "sign");
+			const signSpy = vi.spyOn(jwt, "sign");
 
 			await sut.generateToken(payload);
 
@@ -37,7 +39,7 @@ describe("JwtService", () => {
 		});
 
 		it("Should throw if jwt.sign throws", async () => {
-			jest.spyOn(jwt, "sign").mockImplementationOnce(() => {
+			vi.spyOn(jwt, "sign").mockImplementationOnce(() => {
 				throw new Error();
 			});
 
@@ -57,7 +59,7 @@ describe("JwtService", () => {
 		const token = "anyToken";
 
 		it("Should call jwt.verify with correct values", async () => {
-			const verifySpy = jest.spyOn(jwt, "verify");
+			const verifySpy = vi.spyOn(jwt, "verify");
 
 			await sut.verify(token);
 
@@ -65,7 +67,7 @@ describe("JwtService", () => {
 		});
 
 		it("Should throw if jwt.verify throws", async () => {
-			jest.spyOn(jwt, "verify").mockImplementationOnce(() => {
+			vi.spyOn(jwt, "verify").mockImplementationOnce(() => {
 				throw new Error();
 			});
 

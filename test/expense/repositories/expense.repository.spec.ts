@@ -17,7 +17,7 @@ describe("ExpenseRepository", () => {
 					provide: PrismaService,
 					useValue: {
 						expense: {
-							create: jest.fn().mockResolvedValue({
+							create: vi.fn().mockResolvedValue({
 								id: expenseMock.getId(),
 								amount: expenseMock.getAmount().getValue(),
 								description: expenseMock.getDescription(),
@@ -39,7 +39,7 @@ describe("ExpenseRepository", () => {
 
 	describe("add", () => {
 		it("Should call prismaService.expense.create with correct values", async () => {
-			const createSpy = jest.spyOn(prismaService.expense, "create");
+			const createSpy = vi.spyOn(prismaService.expense, "create");
 
 			await sut.add(expenseMock);
 
@@ -63,7 +63,7 @@ describe("ExpenseRepository", () => {
 		});
 
 		it("Should throw if prismaService.expense.create throws", async () => {
-			jest.spyOn(prismaService.expense, "create").mockRejectedValueOnce(new Error("Database error"));
+			vi.spyOn(prismaService.expense, "create").mockRejectedValueOnce(new Error("Database error"));
 
 			const promise = sut.add(expenseMock);
 
