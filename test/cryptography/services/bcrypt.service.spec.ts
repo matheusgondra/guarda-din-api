@@ -2,11 +2,11 @@ import { Test } from "@nestjs/testing";
 import bcrypt from "bcryptjs";
 import { BCryptService } from "@/cryptography/services/bcrypt.service";
 
-jest.mock("bcryptjs", () => ({
+vi.mock("bcryptjs", () => ({
 	__esModule: true,
 	default: {
-		hash: jest.fn().mockResolvedValue("hashed_value"),
-		compare: jest.fn().mockResolvedValue(true)
+		hash: vi.fn().mockResolvedValue("hashed_value"),
+		compare: vi.fn().mockResolvedValue(true)
 	}
 }));
 
@@ -32,7 +32,7 @@ describe("BCryptService", () => {
 
 	describe("generate", () => {
 		it("Should call bcrypt.hash with correct values", async () => {
-			const hashSpy = jest.spyOn(bcrypt, "hash");
+			const hashSpy = vi.spyOn(bcrypt, "hash");
 
 			await sut.generate(value);
 
@@ -46,7 +46,7 @@ describe("BCryptService", () => {
 		});
 
 		it("Should throw if bcrypt.hash throws", async () => {
-			jest.spyOn(bcrypt, "hash").mockImplementationOnce(() => {
+			vi.spyOn(bcrypt, "hash").mockImplementationOnce(() => {
 				throw new Error();
 			});
 
@@ -58,7 +58,7 @@ describe("BCryptService", () => {
 
 	describe("compare", () => {
 		it("Should call bcrypt.compare with correct values", async () => {
-			const compareSpy = jest.spyOn(bcrypt, "compare");
+			const compareSpy = vi.spyOn(bcrypt, "compare");
 
 			await sut.compare(value, hash);
 
@@ -66,7 +66,7 @@ describe("BCryptService", () => {
 		});
 
 		it("Should throw if bcrypt.compare throws", async () => {
-			jest.spyOn(bcrypt, "compare").mockImplementationOnce(() => {
+			vi.spyOn(bcrypt, "compare").mockImplementationOnce(() => {
 				throw new Error();
 			});
 
@@ -82,7 +82,7 @@ describe("BCryptService", () => {
 		});
 
 		it("Should return false if bcrypt.compare returns false", async () => {
-			jest.spyOn(bcrypt, "compare").mockImplementationOnce(() => false);
+			vi.spyOn(bcrypt, "compare").mockImplementationOnce(() => false);
 
 			const isValid = await sut.compare(value, hash);
 

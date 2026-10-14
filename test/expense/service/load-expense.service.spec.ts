@@ -23,7 +23,7 @@ describe("LoadExpenseService", () => {
 				{
 					provide: LoadExpenseRepository,
 					useValue: {
-						load: jest.fn().mockResolvedValue([mockedExpense])
+						load: vi.fn().mockResolvedValue([mockedExpense])
 					}
 				}
 			]
@@ -34,7 +34,7 @@ describe("LoadExpenseService", () => {
 	});
 
 	it("Should call LoadExpenseRepository with correct values", async () => {
-		const loadSpy = jest.spyOn(loadExpenseRepository, "load");
+		const loadSpy = vi.spyOn(loadExpenseRepository, "load");
 
 		await sut.execute(param);
 
@@ -46,7 +46,7 @@ describe("LoadExpenseService", () => {
 	});
 
 	it("Should throw if LoadExpenseRepository throws", async () => {
-		jest.spyOn(loadExpenseRepository, "load").mockRejectedValueOnce(new Error());
+		vi.spyOn(loadExpenseRepository, "load").mockRejectedValueOnce(new Error());
 
 		const promise = sut.execute(param);
 

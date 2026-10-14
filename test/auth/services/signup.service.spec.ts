@@ -28,19 +28,19 @@ describe("SignupService", () => {
 				{
 					provide: LoadUserByEmailRepository,
 					useValue: {
-						loadByEmail: jest.fn().mockResolvedValue(null)
+						loadByEmail: vi.fn().mockResolvedValue(null)
 					}
 				},
 				{
 					provide: HashGenerator,
 					useValue: {
-						generate: jest.fn().mockResolvedValue("hashed_password")
+						generate: vi.fn().mockResolvedValue("hashed_password")
 					}
 				},
 				{
 					provide: AddUserRepository,
 					useValue: {
-						add: jest.fn().mockResolvedValue(userMock)
+						add: vi.fn().mockResolvedValue(userMock)
 					}
 				}
 			]
@@ -54,7 +54,7 @@ describe("SignupService", () => {
 
 	describe("LoadUserByEmailRepository", () => {
 		it("Should call LoadUserByEmailRepository with correct email", async () => {
-			const loadByEmailSpy = jest.spyOn(loadUserByEmailRepositoryStub, "loadByEmail");
+			const loadByEmailSpy = vi.spyOn(loadUserByEmailRepositoryStub, "loadByEmail");
 
 			await sut.execute(param);
 
@@ -62,7 +62,7 @@ describe("SignupService", () => {
 		});
 
 		it("Should throw if LoadUserByEmailRepository throws", async () => {
-			jest.spyOn(loadUserByEmailRepositoryStub, "loadByEmail").mockRejectedValueOnce(new Error());
+			vi.spyOn(loadUserByEmailRepositoryStub, "loadByEmail").mockRejectedValueOnce(new Error());
 
 			const promise = sut.execute(param);
 
@@ -70,7 +70,7 @@ describe("SignupService", () => {
 		});
 
 		it("Should throw UserAlreadyExistsError if LoadUserByEmailRepository returns a user", async () => {
-			jest.spyOn(loadUserByEmailRepositoryStub, "loadByEmail").mockResolvedValueOnce(userMock);
+			vi.spyOn(loadUserByEmailRepositoryStub, "loadByEmail").mockResolvedValueOnce(userMock);
 
 			const promise = sut.execute(param);
 
@@ -80,7 +80,7 @@ describe("SignupService", () => {
 
 	describe("HashGenerator", () => {
 		it("Should call HashGenerator with correct value", async () => {
-			const generateSpy = jest.spyOn(hashGeneratorStub, "generate");
+			const generateSpy = vi.spyOn(hashGeneratorStub, "generate");
 
 			await sut.execute(param);
 
@@ -88,7 +88,7 @@ describe("SignupService", () => {
 		});
 
 		it("Should throw if HashGenerator throws", async () => {
-			jest.spyOn(hashGeneratorStub, "generate").mockRejectedValueOnce(new Error());
+			vi.spyOn(hashGeneratorStub, "generate").mockRejectedValueOnce(new Error());
 
 			const promise = sut.execute(param);
 
@@ -98,7 +98,7 @@ describe("SignupService", () => {
 
 	describe("AddUserRepository", () => {
 		it("Should call AddUserRepository with correct value", async () => {
-			const addSpy = jest.spyOn(addUserRepositoryStub, "add");
+			const addSpy = vi.spyOn(addUserRepositoryStub, "add");
 
 			await sut.execute(param);
 
@@ -112,7 +112,7 @@ describe("SignupService", () => {
 		});
 
 		it("Should throw if AddUserRepository throws", async () => {
-			jest.spyOn(addUserRepositoryStub, "add").mockRejectedValueOnce(new Error());
+			vi.spyOn(addUserRepositoryStub, "add").mockRejectedValueOnce(new Error());
 
 			const promise = sut.execute(param);
 

@@ -26,19 +26,19 @@ describe("LoginService", () => {
 				{
 					provide: LoadUserByEmailRepository,
 					useValue: {
-						loadByEmail: jest.fn().mockResolvedValue(userMock)
+						loadByEmail: vi.fn().mockResolvedValue(userMock)
 					}
 				},
 				{
 					provide: HashComparer,
 					useValue: {
-						compare: jest.fn().mockResolvedValue(true)
+						compare: vi.fn().mockResolvedValue(true)
 					}
 				},
 				{
 					provide: TokenGenerator,
 					useValue: {
-						generateToken: jest.fn().mockResolvedValue("anyToken")
+						generateToken: vi.fn().mockResolvedValue("anyToken")
 					}
 				}
 			]
@@ -52,7 +52,7 @@ describe("LoginService", () => {
 
 	describe("LoadUserByEmailRepository", () => {
 		it("Should call LoadUserByEmailRepository with correct email", async () => {
-			const loadByEmailSpy = jest.spyOn(loadUserByEmailRepository, "loadByEmail");
+			const loadByEmailSpy = vi.spyOn(loadUserByEmailRepository, "loadByEmail");
 
 			await sut.execute(param);
 
@@ -60,7 +60,7 @@ describe("LoginService", () => {
 		});
 
 		it("Should throw if LoadUserByEmailRepository throws", async () => {
-			jest.spyOn(loadUserByEmailRepository, "loadByEmail").mockRejectedValueOnce(new Error());
+			vi.spyOn(loadUserByEmailRepository, "loadByEmail").mockRejectedValueOnce(new Error());
 
 			const promise = sut.execute(param);
 
@@ -68,7 +68,7 @@ describe("LoginService", () => {
 		});
 
 		it("Should throw InvalidCredentialsError if LoadUserByEmailRepository returns null", async () => {
-			jest.spyOn(loadUserByEmailRepository, "loadByEmail").mockResolvedValueOnce(null);
+			vi.spyOn(loadUserByEmailRepository, "loadByEmail").mockResolvedValueOnce(null);
 
 			const promise = sut.execute(param);
 
@@ -78,7 +78,7 @@ describe("LoginService", () => {
 
 	describe("HashComparer", () => {
 		it("Should call HashComparer with correct values", async () => {
-			const compareSpy = jest.spyOn(hashComparer, "compare");
+			const compareSpy = vi.spyOn(hashComparer, "compare");
 
 			await sut.execute(param);
 
@@ -86,7 +86,7 @@ describe("LoginService", () => {
 		});
 
 		it("Should throw if HashComparer throws", async () => {
-			jest.spyOn(hashComparer, "compare").mockRejectedValueOnce(new Error());
+			vi.spyOn(hashComparer, "compare").mockRejectedValueOnce(new Error());
 
 			const promise = sut.execute(param);
 
@@ -94,7 +94,7 @@ describe("LoginService", () => {
 		});
 
 		it("Should throw InvalidCredentialsError if HashComparer returns false", async () => {
-			jest.spyOn(hashComparer, "compare").mockResolvedValueOnce(false);
+			vi.spyOn(hashComparer, "compare").mockResolvedValueOnce(false);
 
 			const promise = sut.execute(param);
 
@@ -104,7 +104,7 @@ describe("LoginService", () => {
 
 	describe("TokenGenerator", () => {
 		it("Should call TokenGenerator with correct value", async () => {
-			const generateTokenSpy = jest.spyOn(tokenGenerator, "generateToken");
+			const generateTokenSpy = vi.spyOn(tokenGenerator, "generateToken");
 
 			await sut.execute(param);
 
@@ -112,7 +112,7 @@ describe("LoginService", () => {
 		});
 
 		it("Should throw if TokenGenerator throws", async () => {
-			jest.spyOn(tokenGenerator, "generateToken").mockRejectedValueOnce(new Error());
+			vi.spyOn(tokenGenerator, "generateToken").mockRejectedValueOnce(new Error());
 
 			const promise = sut.execute(param);
 
