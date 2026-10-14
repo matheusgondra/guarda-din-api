@@ -1,7 +1,7 @@
 import { Injectable } from "@nestjs/common";
-import { AddExpenseParam, AddExpenseResult, AddExpenseUseCase } from "@/domain/usecases/expense/add-expense.usecase";
-import { Expense } from "../entities/expense.entity";
-import { AddExpenseRepository } from "../protocols/add-expense-repository.protocol";
+import { AddExpenseParam, AddExpenseResult, AddExpenseUseCase } from "@/domain/usecases/expense/add-expense.usecase.js";
+import { Expense } from "../entities/expense.entity.js";
+import { AddExpenseRepository } from "../protocols/add-expense-repository.protocol.js";
 
 @Injectable()
 export class AddExpenseService implements AddExpenseUseCase {

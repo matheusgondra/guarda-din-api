@@ -1,7 +1,7 @@
 import { Test } from "@nestjs/testing";
-import { PrismaService } from "@/database/services/prisma.service";
-import { ExpenseRepository } from "@/expense/repositories/expense.repository";
-import { ExpenseMock } from "../mock/expense.mock";
+import { PrismaService } from "@/database/services/prisma.service.js";
+import { ExpenseRepository } from "@/expense/repositories/expense.repository.js";
+import { ExpenseMock } from "../mock/expense.mock.js";
 
 describe("ExpenseRepository", () => {
 	let sut: ExpenseRepository;

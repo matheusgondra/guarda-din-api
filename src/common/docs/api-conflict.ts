@@ -1,6 +1,6 @@
 import { applyDecorators } from "@nestjs/common";
 import { ApiConflictResponse } from "@nestjs/swagger";
-import { ErrorResponseDTO } from "../dto/error-response.dto";
+import { ErrorResponseDTO } from "../dto/error-response.dto.js";
 
 export const ApiConflict = () =>
 	applyDecorators(

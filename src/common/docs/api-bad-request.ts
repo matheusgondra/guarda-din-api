@@ -1,6 +1,6 @@
 import { applyDecorators } from "@nestjs/common";
 import { ApiBadRequestResponse } from "@nestjs/swagger";
-import { ValidationErrorResponseDTO } from "../dto/validation-error-response.dto";
+import { ValidationErrorResponseDTO } from "../dto/validation-error-response.dto.js";
 
 export const ApiBadRequest = () =>
 	applyDecorators(

@@ -1,10 +1,10 @@
 import { Body, Controller, Logger, Post } from "@nestjs/common";
 import { ApiCreatedResponse, ApiTags } from "@nestjs/swagger";
-import { ApiBadRequest } from "@/common/docs/api-bad-request";
-import { ApiConflict } from "@/common/docs/api-conflict";
-import { SignupUseCase } from "@/domain/usecases/auth/signup.usecase";
-import { SignupRequestDTO } from "../dto/signup-request.dto";
-import { SignupResponseDTO } from "../dto/signup-response.dto";
+import { ApiBadRequest } from "@/common/docs/api-bad-request.js";
+import { ApiConflict } from "@/common/docs/api-conflict.js";
+import { SignupUseCase } from "@/domain/usecases/auth/signup.usecase.js";
+import { SignupRequestDTO } from "../dto/signup-request.dto.js";
+import { SignupResponseDTO } from "../dto/signup-response.dto.js";
 
 @ApiTags("Auth")
 @Controller("signup")

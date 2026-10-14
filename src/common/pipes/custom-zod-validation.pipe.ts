@@ -1,7 +1,7 @@
 import { BadRequestException, PipeTransform, Type } from "@nestjs/common";
 import { createZodValidationPipe } from "nestjs-zod";
 import { ZodError } from "zod";
-import { ValidationErrorResponseDTO } from "../dto/validation-error-response.dto";
+import { ValidationErrorResponseDTO } from "../dto/validation-error-response.dto.js";
 
 export const CustomZodValidationPipe: Type<PipeTransform> = createZodValidationPipe({
 	createValidationException: (zodError) => {

@@ -1,6 +1,6 @@
 import { z } from "zod";
-import { Category, type CategoryValue } from "@/domain/models/category";
-import { Money } from "@/domain/models/money";
+import { Category, type CategoryValue } from "@/domain/models/category.js";
+import { Money } from "@/domain/models/money.js";
 
 const expenseDataSchema = z.object({
 	id: z.uuidv7().optional(),

@@ -1,7 +1,7 @@
-import { Category } from "@/domain/models/category";
-import { Money } from "@/domain/models/money";
-import { Expense as Entity } from "@/generated/prisma/client";
-import { Expense } from "../entities/expense.entity";
+import { Category } from "@/domain/models/category.js";
+import { Money } from "@/domain/models/money.js";
+import { Expense as Entity } from "@/generated/prisma/client.js";
+import { Expense } from "../entities/expense.entity.js";
 
 export class ExpenseMapper {
 	static toDomain(entity: Entity): Expense {

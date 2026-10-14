@@ -1,7 +1,7 @@
 import jwt from "jsonwebtoken";
-import { TokenPayloadDTO } from "../dto/token-payload.dto";
-import { TokenGenerator } from "../protocols/token-generator.protocol";
-import { TokenVerify } from "../protocols/token-verify.protocol";
+import { TokenPayloadDTO } from "../dto/token-payload.dto.js";
+import { TokenGenerator } from "../protocols/token-generator.protocol.js";
+import { TokenVerify } from "../protocols/token-verify.protocol.js";
 
 type JwtPayload = {
 	sub: string;

@@ -1,8 +1,8 @@
 import { Test } from "@nestjs/testing";
-import { LoadExpenseParam } from "@/domain/usecases/expense/load-expense.usecase";
-import { LoadExpenseRepository } from "@/expense/protocols/load-expense-repository.protocol";
-import { LoadExpenseService } from "@/expense/services/load-expense.service";
-import { ExpenseMock } from "../mock/expense.mock";
+import { LoadExpenseParam } from "@/domain/usecases/expense/load-expense.usecase.js";
+import { LoadExpenseRepository } from "@/expense/protocols/load-expense-repository.protocol.js";
+import { LoadExpenseService } from "@/expense/services/load-expense.service.js";
+import { ExpenseMock } from "../mock/expense.mock.js";
 
 describe("LoadExpenseService", () => {
 	let sut: LoadExpenseService;

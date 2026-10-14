@@ -1,9 +1,9 @@
 import { INestApplication } from "@nestjs/common";
 import { Test } from "@nestjs/testing";
 import request from "supertest";
-import { AppModule } from "@/app.module";
-import { ErrorResponseDTO } from "@/common/dto/error-response.dto";
-import { PrismaService } from "@/database/services/prisma.service";
+import { AppModule } from "@/app.module.js";
+import { ErrorResponseDTO } from "@/common/dto/error-response.dto.js";
+import { PrismaService } from "@/database/services/prisma.service.js";
 
 describe("LoginController (e2e)", () => {
 	let app: INestApplication;
