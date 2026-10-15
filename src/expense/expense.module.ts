@@ -4,6 +4,9 @@ import { AuthModule } from "@/auth/auth.module.js";
 import { CryptographyModule } from "@/cryptography/cryptography.module.js";
 import { DatabaseModule } from "@/database/database.module.js";
 import { AddExpenseController } from "./controllers/add-expense.controller.js";
+import { AddExpenseRepository } from "./protocols/add-expense-repository.protocol.js";
+import { CountExpensesRepository } from "./protocols/count-expenses-repository.protocol.js";
+import { ExpenseRepository } from "./repositories/expense.repository.js";
 import { AddExpenseService } from "./services/add-expense.service.js";
 
 @Module({
@@ -13,8 +16,15 @@ import { AddExpenseService } from "./services/add-expense.service.js";
 		{
 			provide: AddExpenseUseCase,
 			useClass: AddExpenseService
+		},
+		{
+			provide: AddExpenseRepository,
+			useClass: ExpenseRepository
+		},
+		{
+			provide: CountExpensesRepository,
+			useClass: ExpenseRepository
 		}
-	],
-	exports: [AddExpenseUseCase]
+	]
 })
 export class ExpenseModule {}

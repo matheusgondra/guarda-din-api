@@ -7,8 +7,10 @@ import { ConflictExceptionFilter } from "./common/filters/conflict-exception.fil
 import { ServerErrorExceptionFilter } from "./common/filters/server-error-exception.filter.js";
 import { UnauthorizedExceptionFilter } from "./common/filters/unauthorized-exception.filter.js";
 import { CustomZodValidationPipe } from "./common/pipes/custom-zod-validation.pipe.js";
+import { DatabaseModule } from "./database/database.module.js";
 import { validateEnv } from "./env.validation.js";
 import { ExpenseModule } from "./expense/expense.module.js";
+import { UserModule } from "./user/user.module.js";
 
 @Module({
 	imports: [
@@ -24,7 +26,9 @@ import { ExpenseModule } from "./expense/expense.module.js";
 			validate: validateEnv
 		}),
 		AuthModule,
-		ExpenseModule
+		UserModule,
+		ExpenseModule,
+		DatabaseModule
 	],
 	providers: [
 		{
