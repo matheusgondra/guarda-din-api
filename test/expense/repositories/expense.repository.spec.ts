@@ -99,5 +99,13 @@ describe("ExpenseRepository", () => {
 				}
 			});
 		});
+
+		it("Should throw if prismaService.expense.count throws", async () => {
+			vi.spyOn(prismaService.expense, "count").mockRejectedValueOnce(new Error("Database error"));
+
+			const promise = sut.count(expenseMock.getUserId());
+
+			await expect(promise).rejects.toThrow("Database error");
+		});
 	});
 });
