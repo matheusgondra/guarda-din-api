@@ -26,7 +26,8 @@ describe("ExpenseRepository", () => {
 								categoryId: 1,
 								createdAt: expenseMock.getCreatedAt(),
 								updatedAt: expenseMock.getUpdatedAt()
-							})
+							}),
+							count: vi.fn().mockResolvedValue(1)
 						}
 					}
 				}
@@ -82,6 +83,20 @@ describe("ExpenseRepository", () => {
 				category: expenseMock.getCategory(),
 				createdAt: expenseMock.getCreatedAt(),
 				updatedAt: expenseMock.getUpdatedAt()
+			});
+		});
+	});
+
+	describe("count", () => {
+		it("Should call prismaService.expense.count with correct value", async () => {
+			const countSpy = vi.spyOn(prismaService.expense, "count");
+
+			await sut.count(expenseMock.getUserId());
+
+			expect(countSpy).toHaveBeenCalledWith({
+				where: {
+					userId: expenseMock.getUserId()
+				}
 			});
 		});
 	});
