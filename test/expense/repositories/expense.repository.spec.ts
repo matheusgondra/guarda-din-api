@@ -107,5 +107,11 @@ describe("ExpenseRepository", () => {
 
 			await expect(promise).rejects.toThrow("Database error");
 		});
+
+		it("Should return a number on success", async () => {
+			const count = await sut.count(expenseMock.getUserId());
+
+			expect(count).toBe(1);
+		});
 	});
 });
