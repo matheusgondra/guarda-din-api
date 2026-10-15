@@ -1,5 +1,6 @@
 import { Test } from "@nestjs/testing";
 import { LoadExpenseParam } from "@/domain/usecases/expense/load-expense.usecase.js";
+import { CountExpensesRepository } from "@/expense/protocols/count-expenses-repository.protocol.js";
 import { LoadExpenseRepository } from "@/expense/protocols/load-expense-repository.protocol.js";
 import { LoadExpenseService } from "@/expense/services/load-expense.service.js";
 import { ExpenseMock } from "../mock/expense.mock.js";
@@ -7,6 +8,7 @@ import { ExpenseMock } from "../mock/expense.mock.js";
 describe("LoadExpenseService", () => {
 	let sut: LoadExpenseService;
 	let loadExpenseRepository: LoadExpenseRepository;
+	let countExpensesRepository: CountExpensesRepository;
 
 	const param: LoadExpenseParam = {
 		userId: "any_user_id",
@@ -25,12 +27,19 @@ describe("LoadExpenseService", () => {
 					useValue: {
 						load: vi.fn().mockResolvedValue([mockedExpense])
 					}
+				},
+				{
+					provide: CountExpensesRepository,
+					useValue: {
+						count: vi.fn().mockResolvedValue(1)
+					}
 				}
 			]
 		}).compile();
 
 		sut = module.get<LoadExpenseService>(LoadExpenseService);
 		loadExpenseRepository = module.get<LoadExpenseRepository>(LoadExpenseRepository);
+		countExpensesRepository = module.get<CountExpensesRepository>(CountExpensesRepository);
 	});
 
 	it("Should call LoadExpenseRepository with correct values", async () => {
@@ -51,6 +60,14 @@ describe("LoadExpenseService", () => {
 		const promise = sut.execute(param);
 
 		await expect(promise).rejects.toThrow();
+	});
+
+	it("Should call CountExpensesRepository with correct value", async () => {
+		const countSpy = vi.spyOn(countExpensesRepository, "count");
+
+		await sut.execute(param);
+
+		expect(countSpy).toHaveBeenCalledWith(param.userId);
 	});
 
 	it("Should return LoadExpenseResult on success", async () => {
