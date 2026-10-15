@@ -70,6 +70,14 @@ describe("LoadExpenseService", () => {
 		expect(countSpy).toHaveBeenCalledWith(param.userId);
 	});
 
+	it("Should throw if CountExpensesRepository throws", async () => {
+		vi.spyOn(countExpensesRepository, "count").mockRejectedValueOnce(new Error());
+
+		const promise = sut.execute(param);
+
+		await expect(promise).rejects.toThrow();
+	});
+
 	it("Should return LoadExpenseResult on success", async () => {
 		const result = await sut.execute(param);
 
