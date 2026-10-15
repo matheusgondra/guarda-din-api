@@ -3,9 +3,10 @@ import { PrismaService } from "@/database/services/prisma.service.js";
 import { Expense } from "../entities/expense.entity.js";
 import { ExpenseMapper } from "../mapper/expese.mapper.js";
 import { AddExpenseRepository } from "../protocols/add-expense-repository.protocol.js";
+import { CountExpensesRepository } from "../protocols/count-expenses-repository.protocol.js";
 
 @Injectable()
-export class ExpenseRepository implements AddExpenseRepository {
+export class ExpenseRepository implements AddExpenseRepository, CountExpensesRepository {
 	constructor(private readonly prismaService: PrismaService) {}
 
 	async add(expense: Expense): Promise<Expense> {
@@ -28,5 +29,15 @@ export class ExpenseRepository implements AddExpenseRepository {
 		});
 
 		return ExpenseMapper.toDomain(createdExpense);
+	}
+
+	async count(userId: string): Promise<number> {
+		const count = await this.prismaService.expense.count({
+			where: {
+				userId
+			}
+		});
+
+		return count;
 	}
 }
