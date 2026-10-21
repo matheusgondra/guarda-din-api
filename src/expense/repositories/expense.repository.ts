@@ -4,9 +4,10 @@ import { Expense } from "../entities/expense.entity.js";
 import { ExpenseMapper } from "../mapper/expese.mapper.js";
 import { AddExpenseRepository } from "../protocols/add-expense-repository.protocol.js";
 import { CountExpensesRepository } from "../protocols/count-expenses-repository.protocol.js";
+import { Data, LoadExpenseRepository } from "../protocols/load-expense-repository.protocol.js";
 
 @Injectable()
-export class ExpenseRepository implements AddExpenseRepository, CountExpensesRepository {
+export class ExpenseRepository implements AddExpenseRepository, CountExpensesRepository, LoadExpenseRepository {
 	constructor(private readonly prismaService: PrismaService) {}
 
 	async add(expense: Expense): Promise<Expense> {
@@ -39,5 +40,22 @@ export class ExpenseRepository implements AddExpenseRepository, CountExpensesRep
 		});
 
 		return count;
+	}
+
+	async load({ userId, limit, page }: Data): Promise<Expense[]> {
+		const offset = (page - 1) * limit;
+
+		const expenses = await this.prismaService.expense.findMany({
+			where: {
+				userId
+			},
+			take: limit,
+			skip: offset,
+			orderBy: {
+				date: "desc"
+			}
+		});
+
+		return expenses.map(ExpenseMapper.toDomain);
 	}
 }
