@@ -15,11 +15,13 @@
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
     "test": "cross-env NODE_ENV=test vitest run",
+    "format:check": "biome format src test",
     "test:watch": "cross-env NODE_ENV=test vitest",
     "test:cov": "cross-env NODE_ENV=test vitest run --coverage",
     "test:debug": "cross-env NODE_ENV=test vitest --inspect-brk --no-file-parallelism",
     "test:e2e": "cross-env NODE_ENV=test tsx test/setup-db.ts && cross-env NODE_ENV=test vitest run --config ./test/vitest-e2e.config.mts",
-    "migrate": "prisma migrate dev"
+    "migrate": "prisma migrate dev",
+    "prepare": "husky"
   },
   "dependencies": {
     "@nestjs/common": "^12.0.0",
@@ -41,6 +43,8 @@
   },
   "devDependencies": {
     "@biomejs/biome": "2.4.12",
+    "@commitlint/cli": "^21.2.4",
+    "@commitlint/config-conventional": "^21.2.4",
     "@nestjs/cli": "^12.0.0",
     "@nestjs/schematics": "^12.0.0",
     "@nestjs/testing": "^12.0.0",
@@ -52,6 +56,7 @@
     "@types/supertest": "^7.2.0",
     "@vitest/coverage-v8": "^5.0.4",
     "cross-env": "^10.1.0",
+    "husky": "^9.1.7",
     "prisma": "^7.7.0",
     "supertest": "^7.2.2",
     "ts-loader": "^9.5.7",

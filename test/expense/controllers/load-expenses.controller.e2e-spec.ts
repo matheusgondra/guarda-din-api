@@ -89,7 +89,7 @@ describe("LoadExpensesController (e2e)", () => {
 					date: expect.any(String),
 					category: "Food",
 					createdAt: expect.any(String),
-					updatedAt: expect.any(String),
+					updatedAt: expect.any(String)
 				},
 				{
 					id: expect.any(String),
@@ -98,7 +98,7 @@ describe("LoadExpensesController (e2e)", () => {
 					date: expect.any(String),
 					category: "Food",
 					createdAt: expect.any(String),
-					updatedAt: expect.any(String),
+					updatedAt: expect.any(String)
 				},
 				{
 					id: expect.any(String),
@@ -107,7 +107,7 @@ describe("LoadExpensesController (e2e)", () => {
 					date: expect.any(String),
 					category: "Food",
 					createdAt: expect.any(String),
-					updatedAt: expect.any(String),
+					updatedAt: expect.any(String)
 				}
 			],
 			meta: {
