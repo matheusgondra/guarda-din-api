@@ -1,7 +1,10 @@
 import { execSync } from "node:child_process";
+import { existsSync } from "node:fs";
 import { loadEnvFile } from "node:process";
 
-loadEnvFile(".env.test");
+if (existsSync(".env.test")) {
+	loadEnvFile(".env.test");
+}
 
 console.log("🔄 Sincronizando o banco de dados de teste...");
 

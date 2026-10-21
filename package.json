@@ -21,6 +21,7 @@
     "test:cov": "cross-env NODE_ENV=test vitest run --coverage",
     "test:debug": "cross-env NODE_ENV=test vitest --inspect-brk --no-file-parallelism",
     "test:e2e": "cross-env NODE_ENV=test tsx test/setup-db.ts && cross-env NODE_ENV=test vitest run --config ./test/vitest-e2e.config.mts",
+    "prisma:generate": "prisma generate",
     "migrate": "prisma migrate dev",
     "prepare": "husky"
   },

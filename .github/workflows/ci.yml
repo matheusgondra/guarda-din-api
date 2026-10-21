@@ -1,0 +1,70 @@
+name: CI
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    # Criação do banco de dados PostgreSQL temporário para os testes
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: root
+          POSTGRES_PASSWORD: rootpassword
+          POSTGRES_DB: guarda_din_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    # Variáveis globais para o Job
+    env:
+      # A URL precisa bater com as credenciais configuradas no serviço acima
+      DATABASE_URL: postgresql://root:rootpassword@localhost:5432/guarda_din_test?schema=public
+      NODE_ENV: test
+      JWT_SECRET: supersecretkeyjwtfortests
+      SALT: 4
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 12
+
+      - name: Setup Node.js v24
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Format Check (Biome)
+        run: pnpm run format:check
+
+      - name: Lint Check (Biome)
+        run: pnpm run lint
+
+      - name: Generate Prisma Client
+        run: pnpm run prisma:generate
+
+      - name: Run Unit Tests
+        run: pnpm run test
+
+      - name: Run E2E Tests
+        # O script setup-db.ts rodará automaticamente antes (conforme seu package.json).
+        # Ele utilizará a DATABASE_URL injetada no 'env' deste job.
+        run: pnpm run test:e2e
