@@ -62,17 +62,18 @@ $ pnpm run test:cov
 
 The project uses Husky to run local checks before each commit:
 
-- pre-commit: runs Biome lint/format checks and the test suite.
+- pre-commit: runs Biome lint/format checks and the unit test suite.
+- pre-push: runs the end-to-end test suite.
 - commit-msg: validates the message against Conventional Commits.
 
 Hooks are installed automatically by pnpm install. Examples of valid commit
 messages include:
 
-`	ext
+```text
 feat: add expense filtering
 fix(auth): handle expired tokens
 chore: update dependencies
-`
+```
 
 ## Support
 
