@@ -1,6 +1,6 @@
 import { PrismaPg } from "@prisma/adapter-pg";
-import { Category } from "../src/domain/models/category";
-import { PrismaClient } from "../src/generated/prisma/client";
+import { Category } from "@/domain/models/category.js";
+import { PrismaClient } from "@/generated/prisma/client.js";
 
 const adapter = new PrismaPg({ connectionString: process.env.DATABASE_URL });
 const prisma = new PrismaClient({ adapter });
@@ -16,9 +16,11 @@ async function main() {
 	});
 }
 
-main()
-	.then(() => console.log("Categories seeded successfully."))
-	.catch((error) => console.error("Error seeding categories:", error))
-	.finally(async () => {
-		await prisma.$disconnect();
-	});
+try {
+	await main();
+	console.log("Categories seeded successfully.");
+} catch (error) {
+	console.error("Error seeding categories:", error);
+} finally {
+	await prisma.$disconnect();
+}

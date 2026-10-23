@@ -45,6 +45,71 @@ $ pnpm run start:dev
 $ pnpm run start:prod
 ```
 
+## Running with Docker
+
+The production API image contains only production dependencies. Prisma migrations
+run in a separate container before the API starts. For a local deployment test
+with PostgreSQL:
+
+```bash
+docker compose up --build
+```
+
+The API will be available at `http://localhost:3000`, and its documentation at
+`http://localhost:3000/api/docs`.
+
+For a deployment platform, run the migration job with the image's
+`dependencies` target before starting the `production` image:
+
+```bash
+docker build --target dependencies -t guarda-din-api-migrations .
+docker run --rm \
+  -e DATABASE_URL="postgresql://user:password@host:5432/database?schema=public" \
+  guarda-din-api-migrations \
+  pnpm prisma migrate deploy
+```
+
+Then start the production image with the runtime variables:
+
+```bash
+docker build --target production -t guarda-din-api .
+docker run --rm -p 3000:3000 \
+  -e NODE_ENV=production \
+  -e PORT=3000 \
+  -e DATABASE_URL="postgresql://user:password@host:5432/database?schema=public" \
+  -e SALT=12 \
+  -e JWT_SECRET="replace-with-a-strong-secret" \
+  guarda-din-api
+```
+
+Set `JWT_SECRET` to a strong value before using this setup outside local
+development. The database data is stored in the `postgres-data` Docker volume.
+To stop the containers without deleting the data:
+
+```bash
+docker compose down
+```
+
+To stop the containers and remove the local database volume:
+
+```bash
+docker compose down -v
+```
+
+To build and run the API image against an external PostgreSQL database, provide
+the required environment variables when starting the container:
+
+```bash
+docker build -t guarda-din-api .
+docker run --rm -p 3000:3000 `
+  -e NODE_ENV=production `
+  -e PORT=3000 `
+  -e DATABASE_URL="postgresql://user:password@host:5432/database?schema=public" `
+  -e SALT=12 `
+  -e JWT_SECRET="replace-with-a-strong-secret" `
+  guarda-din-api
+```
+
 ## Test
 
 ```bash

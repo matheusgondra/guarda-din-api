@@ -1,3 +1,4 @@
+import { ConfigService } from "@nestjs/config";
 import { NestFactory } from "@nestjs/core";
 import { DocumentBuilder, SwaggerModule } from "@nestjs/swagger";
 import { apiReference } from "@scalar/nestjs-api-reference";
@@ -8,6 +9,7 @@ async function bootstrap() {
 	const app = await NestFactory.create(AppModule);
 
 	app.setGlobalPrefix("api");
+	app.enableCors();
 
 	const config = new DocumentBuilder()
 		.setTitle("GuardaDin API")
@@ -37,6 +39,9 @@ async function bootstrap() {
 		})
 	);
 
-	await app.listen(3000);
+	const configModule = app.get(ConfigService);
+	const port = configModule.get<number>("PORT") || 3000;
+
+	await app.listen(port, "0.0.0.0");
 }
 bootstrap();
